@@ -42,14 +42,19 @@ CREATE TABLE Customer (
 GO
 
 -- -------------------------------------------------------------------------
--- Entity #1.1: Phone_Number (Multivalued attribute representation for Customer)
+-- Entity #1.1: Phone_Number (Multivalued attribute representation - 10 Attributes)
 -- -------------------------------------------------------------------------
 IF OBJECT_ID('dbo.Phone_Number', 'U') IS NOT NULL DROP TABLE dbo.Phone_Number;
 CREATE TABLE Phone_Number (
     Phone_Num VARCHAR(20) NOT NULL,
     Customer_ID INT NOT NULL,
     Phone_Type VARCHAR(20) NOT NULL DEFAULT 'Mobile' CHECK (Phone_Type IN ('Mobile', 'Home', 'Work')),
+    Country_Code VARCHAR(10) NOT NULL DEFAULT '+92',
+    Telecom_Carrier VARCHAR(30) NOT NULL DEFAULT 'Jazz',
     Is_Primary BIT NOT NULL DEFAULT 1,
+    Is_WhatsApp_Enabled BIT NOT NULL DEFAULT 1,
+    Verification_Status VARCHAR(20) NOT NULL DEFAULT 'Verified' CHECK (Verification_Status IN ('Verified', 'Pending', 'Unverified')),
+    SMS_Promo_OptIn BIT NOT NULL DEFAULT 1,
     Added_Date DATE NOT NULL DEFAULT CAST(GETDATE() AS DATE),
     PRIMARY KEY (Phone_Num, Customer_ID),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) ON DELETE CASCADE
@@ -97,7 +102,7 @@ CREATE TABLE Screen (
 GO
 
 -- -------------------------------------------------------------------------
--- EER Subclass #1: IMAXScreen (Inherits Screen)
+-- EER Subclass #1: IMAXScreen (Inherits Screen - 10 Attributes)
 -- -------------------------------------------------------------------------
 IF OBJECT_ID('dbo.IMAXScreen', 'U') IS NOT NULL DROP TABLE dbo.IMAXScreen;
 CREATE TABLE IMAXScreen (
@@ -106,13 +111,17 @@ CREATE TABLE IMAXScreen (
     Aspect_Ratio VARCHAR(20) NOT NULL DEFAULT '1.43:1',
     Dual_Laser_3D BIT NOT NULL DEFAULT 1,
     Curved_Angle_Degrees FLOAT NOT NULL CHECK (Curved_Angle_Degrees > 0),
+    Audio_Channel_Count INT NOT NULL DEFAULT 12 CHECK (Audio_Channel_Count >= 6),
+    Max_Screen_Luminance_Nits INT NOT NULL DEFAULT 1000 CHECK (Max_Screen_Luminance_Nits > 0),
+    HFR_Supported BIT NOT NULL DEFAULT 1,
+    Calibration_Frequency_Days INT NOT NULL DEFAULT 30 CHECK (Calibration_Frequency_Days > 0),
     Commercial_License_Code VARCHAR(50) NOT NULL UNIQUE,
     FOREIGN KEY (Screen_ID) REFERENCES Screen(Screen_ID) ON DELETE CASCADE
 );
 GO
 
 -- -------------------------------------------------------------------------
--- EER Subclass #2: GoldScreen (Inherits Screen)
+-- EER Subclass #2: GoldScreen (Inherits Screen - 10 Attributes)
 -- -------------------------------------------------------------------------
 IF OBJECT_ID('dbo.GoldScreen', 'U') IS NOT NULL DROP TABLE dbo.GoldScreen;
 CREATE TABLE GoldScreen (
@@ -120,38 +129,50 @@ CREATE TABLE GoldScreen (
     Lounge_Service_Type VARCHAR(50) NOT NULL,
     Recliner_Model VARCHAR(50) NOT NULL,
     Butler_Service_Enabled BIT NOT NULL DEFAULT 1,
-    Complimentary_Snack_Tier VARCHAR(30) NOT NULL DEFAULT 'Premium Combo',
+    Complimentary_Snack_Tier VARCHAR(30) NOT NULL DEFAULT 'Platinum Combo',
     Call_Button_Active BIT NOT NULL DEFAULT 1,
+    USB_Charging_Speed_Watts INT NOT NULL DEFAULT 45 CHECK (USB_Charging_Speed_Watts > 0),
+    Legrest_Angle_Max INT NOT NULL DEFAULT 160 CHECK (Legrest_Angle_Max BETWEEN 90 AND 180),
+    Pillow_Blanket_Provided BIT NOT NULL DEFAULT 1,
+    Lounge_Access_Code VARCHAR(30) NOT NULL UNIQUE,
     FOREIGN KEY (Screen_ID) REFERENCES Screen(Screen_ID) ON DELETE CASCADE
 );
 GO
 
 -- -------------------------------------------------------------------------
--- EER Subclass #3: PremiumScreen (Inherits Screen)
+-- EER Subclass #3: PremiumScreen (Inherits Screen - 10 Attributes)
 -- -------------------------------------------------------------------------
 IF OBJECT_ID('dbo.PremiumScreen', 'U') IS NOT NULL DROP TABLE dbo.PremiumScreen;
 CREATE TABLE PremiumScreen (
     Screen_ID INT PRIMARY KEY,
     Luxury_Level VARCHAR(50) NOT NULL,
-    Private_Balcony_Seats INT NOT NULL DEFAULT 20,
+    Private_Balcony_Seats INT NOT NULL DEFAULT 16 CHECK (Private_Balcony_Seats >= 0),
     Wine_Bar_Access BIT NOT NULL DEFAULT 0,
     VIP_Restroom_Access BIT NOT NULL DEFAULT 1,
     Heated_Seats BIT NOT NULL DEFAULT 1,
+    Acoustic_Damping_Rating VARCHAR(20) NOT NULL DEFAULT 'Class A',
+    Coat_Check_Available BIT NOT NULL DEFAULT 1,
+    Concierge_Desk_Station VARCHAR(30) NOT NULL DEFAULT 'VIP Desk North',
+    Noise_Isolation_Db INT NOT NULL DEFAULT 65 CHECK (Noise_Isolation_Db > 0),
     FOREIGN KEY (Screen_ID) REFERENCES Screen(Screen_ID) ON DELETE CASCADE
 );
 GO
 
 -- -------------------------------------------------------------------------
--- EER Subclass #4: SilverScreen (Inherits Screen)
+-- EER Subclass #4: SilverScreen (Inherits Screen - 10 Attributes)
 -- -------------------------------------------------------------------------
 IF OBJECT_ID('dbo.SilverScreen', 'U') IS NOT NULL DROP TABLE dbo.SilverScreen;
 CREATE TABLE SilverScreen (
     Screen_ID INT PRIMARY KEY,
-    Discount_Tier_Percent INT NOT NULL DEFAULT 15 CHECK (Discount_Tier_Percent >= 0),
+    Discount_Tier_Percent INT NOT NULL DEFAULT 20 CHECK (Discount_Tier_Percent >= 0),
     Economy_Bundle_Eligible BIT NOT NULL DEFAULT 1,
     Student_Pass_Accepted BIT NOT NULL DEFAULT 1,
     Group_Discount_Active BIT NOT NULL DEFAULT 1,
     Free_Refill_Eligible BIT NOT NULL DEFAULT 0,
+    Aisle_Ramp_Access BIT NOT NULL DEFAULT 1,
+    Booster_Seat_Quantity INT NOT NULL DEFAULT 25 CHECK (Booster_Seat_Quantity >= 0),
+    Bulk_Ticket_Eligible BIT NOT NULL DEFAULT 1,
+    Matinee_Discount_Rate DECIMAL(5,2) NOT NULL DEFAULT 0.25 CHECK (Matinee_Discount_Rate >= 0),
     FOREIGN KEY (Screen_ID) REFERENCES Screen(Screen_ID) ON DELETE CASCADE
 );
 GO
@@ -306,16 +327,20 @@ CREATE TABLE Concession_Order (
 GO
 
 -- -------------------------------------------------------------------------
--- Entity #10.1: Concession_Item_Order (Associative Entity for Concessions)
+-- Entity #10.1: Concession_Item_Order (Associative Entity - 10 Attributes)
 -- -------------------------------------------------------------------------
 IF OBJECT_ID('dbo.Concession_Item_Order', 'U') IS NOT NULL DROP TABLE dbo.Concession_Item_Order;
 CREATE TABLE Concession_Item_Order (
     Order_ID INT NOT NULL,
     Item_ID INT NOT NULL,
     Quantity INT NOT NULL CHECK (Quantity > 0),
-    Unit_Price_Charged DECIMAL(8,2) NOT NULL,
-    Subtotal DECIMAL(10,2) NOT NULL,
-    Notes VARCHAR(100) NULL,
+    Unit_Price_Charged DECIMAL(8,2) NOT NULL CHECK (Unit_Price_Charged > 0),
+    Discount_Applied DECIMAL(8,2) NOT NULL DEFAULT 0.00 CHECK (Discount_Applied >= 0),
+    Tax_Amount DECIMAL(8,2) NOT NULL DEFAULT 0.00 CHECK (Tax_Amount >= 0),
+    Subtotal DECIMAL(10,2) NOT NULL CHECK (Subtotal >= 0),
+    Preparation_Status VARCHAR(30) NOT NULL DEFAULT 'Prepared' CHECK (Preparation_Status IN ('Ordered', 'Preparing', 'Prepared', 'Delivered')),
+    Special_Instructions VARCHAR(100) NOT NULL DEFAULT 'Standard packaging',
+    Dispensed_Timestamp DATETIME NOT NULL DEFAULT GETDATE(),
     PRIMARY KEY (Order_ID, Item_ID),
     FOREIGN KEY (Order_ID) REFERENCES Concession_Order(Order_ID) ON DELETE CASCADE,
     FOREIGN KEY (Item_ID) REFERENCES Tuck_Shop(Item_ID)
@@ -489,42 +514,42 @@ GO
 -- -------------------------------------------------------------------------
 -- Data Ingestion: Phone_Number (35 tuples)
 -- -------------------------------------------------------------------------
-INSERT INTO Phone_Number (Phone_Num, Customer_ID, Phone_Type, Is_Primary, Added_Date) VALUES
-('0346-7665411', 1, 'Mobile', 1, '2023-01-10'),
-('0300-8798234', 2, 'Mobile', 1, '2023-01-15'),
-('0301-1111111', 3, 'Mobile', 1, '2023-02-01'),
-('0302-2222222', 4, 'Mobile', 1, '2023-02-12'),
-('0303-3333333', 5, 'Mobile', 1, '2023-02-20'),
-('0304-4444444', 6, 'Mobile', 1, '2023-03-01'),
-('0305-5555555', 7, 'Mobile', 1, '2023-03-10'),
-('0306-6666666', 8, 'Mobile', 1, '2023-03-15'),
-('0307-7777777', 9, 'Mobile', 1, '2023-03-25'),
-('0308-8888888', 10, 'Mobile', 1, '2023-04-02'),
-('0309-9999999', 11, 'Mobile', 1, '2023-04-10'),
-('0310-0000001', 12, 'Mobile', 1, '2023-04-18'),
-('0311-1111112', 13, 'Mobile', 1, '2023-05-01'),
-('0312-2222223', 14, 'Mobile', 1, '2023-05-10'),
-('0313-3333334', 15, 'Mobile', 1, '2023-05-20'),
-('0314-4444445', 16, 'Mobile', 1, '2023-06-01'),
-('0315-5555556', 17, 'Mobile', 1, '2023-06-15'),
-('0316-6666667', 18, 'Mobile', 1, '2023-06-25'),
-('0317-7777778', 19, 'Mobile', 1, '2023-07-05'),
-('0318-8888889', 20, 'Mobile', 1, '2023-07-12'),
-('0321-1234567', 21, 'Mobile', 1, '2023-07-22'),
-('0322-2345678', 22, 'Mobile', 1, '2023-08-01'),
-('0323-3456789', 23, 'Mobile', 1, '2023-08-15'),
-('0324-4567890', 24, 'Mobile', 1, '2023-08-25'),
-('0325-5678901', 25, 'Mobile', 1, '2023-09-02'),
-('0331-6789012', 26, 'Mobile', 1, '2023-09-12'),
-('0332-7890123', 27, 'Mobile', 1, '2023-09-20'),
-('0333-8901234', 28, 'Mobile', 1, '2023-10-01'),
-('0334-9012345', 29, 'Mobile', 1, '2023-10-10'),
-('0335-0123456', 30, 'Mobile', 1, '2023-10-20'),
-('0341-1122334', 31, 'Mobile', 1, '2023-11-01'),
-('0342-2233445', 32, 'Mobile', 1, '2023-11-15'),
-('0343-3344556', 33, 'Mobile', 1, '2023-11-25'),
-('0344-4455667', 34, 'Mobile', 1, '2023-12-05'),
-('0345-5566778', 35, 'Mobile', 1, '2023-12-18');
+INSERT INTO Phone_Number (Phone_Num, Customer_ID, Phone_Type, Country_Code, Telecom_Carrier, Is_Primary, Is_WhatsApp_Enabled, Verification_Status, SMS_Promo_OptIn, Added_Date) VALUES
+('0311-1111111', 1, 'Mobile', '+92', 'Jazz', 1, 1, 'Verified', 1, '2023-01-10'),
+('0312-1222222', 2, 'Mobile', '+92', 'Telenor', 1, 1, 'Verified', 1, '2023-01-15'),
+('0313-1333333', 3, 'Mobile', '+92', 'Zong', 1, 1, 'Verified', 1, '2023-02-01'),
+('0314-1444444', 4, 'Mobile', '+92', 'Ufone', 1, 1, 'Verified', 1, '2023-02-12'),
+('0310-1555555', 5, 'Mobile', '+92', 'Jazz', 1, 0, 'Verified', 1, '2023-02-20'),
+('0311-1666666', 6, 'Work', '+92', 'Telenor', 1, 1, 'Verified', 1, '2023-03-01'),
+('0312-1777777', 7, 'Mobile', '+92', 'Zong', 1, 1, 'Verified', 1, '2023-03-10'),
+('0313-1888888', 8, 'Mobile', '+92', 'Ufone', 1, 1, 'Verified', 1, '2023-03-15'),
+('0314-1999999', 9, 'Mobile', '+92', 'Jazz', 1, 1, 'Verified', 1, '2023-03-25'),
+('0310-2111110', 10, 'Mobile', '+92', 'Telenor', 1, 0, 'Verified', 1, '2023-04-02'),
+('0311-2222221', 11, 'Mobile', '+92', 'Zong', 1, 1, 'Verified', 1, '2023-04-10'),
+('0312-2333332', 12, 'Work', '+92', 'Ufone', 1, 1, 'Verified', 1, '2023-04-18'),
+('0313-2444443', 13, 'Mobile', '+92', 'Jazz', 1, 1, 'Verified', 1, '2023-05-01'),
+('0314-2555554', 14, 'Mobile', '+92', 'Telenor', 1, 1, 'Verified', 1, '2023-05-10'),
+('0310-2666665', 15, 'Mobile', '+92', 'Zong', 1, 0, 'Verified', 1, '2023-05-20'),
+('0311-2777776', 16, 'Mobile', '+92', 'Ufone', 1, 1, 'Verified', 1, '2023-06-01'),
+('0312-2888887', 17, 'Mobile', '+92', 'Jazz', 1, 1, 'Verified', 1, '2023-06-15'),
+('0313-2999998', 18, 'Work', '+92', 'Telenor', 1, 1, 'Verified', 1, '2023-06-25'),
+('0314-3111109', 19, 'Mobile', '+92', 'Zong', 1, 1, 'Verified', 1, '2023-07-05'),
+('0310-3222220', 20, 'Mobile', '+92', 'Ufone', 1, 0, 'Verified', 1, '2023-07-12'),
+('0311-3333331', 21, 'Mobile', '+92', 'Jazz', 1, 1, 'Verified', 1, '2023-07-22'),
+('0312-3444442', 22, 'Mobile', '+92', 'Telenor', 1, 1, 'Verified', 1, '2023-08-01'),
+('0313-3555553', 23, 'Mobile', '+92', 'Zong', 1, 1, 'Verified', 1, '2023-08-15'),
+('0314-3666664', 24, 'Work', '+92', 'Ufone', 1, 1, 'Verified', 1, '2023-08-25'),
+('0310-3777775', 25, 'Mobile', '+92', 'Jazz', 1, 0, 'Verified', 1, '2023-09-02'),
+('0311-3888886', 26, 'Mobile', '+92', 'Telenor', 1, 1, 'Verified', 1, '2023-09-12'),
+('0312-3999997', 27, 'Mobile', '+92', 'Zong', 1, 1, 'Verified', 1, '2023-09-20'),
+('0313-4111108', 28, 'Mobile', '+92', 'Ufone', 1, 1, 'Verified', 1, '2023-10-01'),
+('0314-4222219', 29, 'Mobile', '+92', 'Jazz', 1, 1, 'Verified', 1, '2023-10-10'),
+('0310-4333330', 30, 'Work', '+92', 'Telenor', 1, 0, 'Verified', 1, '2023-10-20'),
+('0311-4444441', 31, 'Mobile', '+92', 'Zong', 1, 1, 'Verified', 1, '2023-11-01'),
+('0312-4555552', 32, 'Mobile', '+92', 'Ufone', 1, 1, 'Verified', 1, '2023-11-15'),
+('0313-4666663', 33, 'Mobile', '+92', 'Jazz', 1, 1, 'Verified', 1, '2023-11-25'),
+('0314-4777774', 34, 'Mobile', '+92', 'Telenor', 1, 1, 'Verified', 1, '2023-12-05'),
+('0310-4888885', 35, 'Mobile', '+92', 'Zong', 1, 0, 'Verified', 1, '2023-12-18');
 GO
 
 -- -------------------------------------------------------------------------
@@ -697,145 +722,145 @@ GO
 -- -------------------------------------------------------------------------
 -- Data Ingestion: IMAXScreen (30 tuples)
 -- -------------------------------------------------------------------------
-INSERT INTO IMAXScreen (Screen_ID, Laser_Projection_Type, Aspect_Ratio, Dual_Laser_3D, Curved_Angle_Degrees, Commercial_License_Code) VALUES
-(1, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-001'),
-(2, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-002'),
-(3, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-003'),
-(4, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-004'),
-(5, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-005'),
-(6, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-006'),
-(7, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-007'),
-(8, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-008'),
-(9, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-009'),
-(10, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-010'),
-(11, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-011'),
-(12, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-012'),
-(13, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-013'),
-(14, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-014'),
-(15, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-015'),
-(16, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-016'),
-(17, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-017'),
-(18, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-018'),
-(19, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-019'),
-(20, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-020'),
-(21, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-021'),
-(22, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-022'),
-(23, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-023'),
-(24, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-024'),
-(25, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-025'),
-(26, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-026'),
-(27, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-027'),
-(28, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-028'),
-(29, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-029'),
-(30, 'Dual 4K Laser', '1.43:1', 1, 26.5, 'IMAX-LIC-030');
+INSERT INTO IMAXScreen (Screen_ID, Laser_Projection_Type, Aspect_Ratio, Dual_Laser_3D, Curved_Angle_Degrees, Audio_Channel_Count, Max_Screen_Luminance_Nits, HFR_Supported, Calibration_Frequency_Days, Commercial_License_Code) VALUES
+(1, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1020, 1, 30, 'IMAX-LIC-001'),
+(2, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1040, 1, 30, 'IMAX-LIC-002'),
+(3, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1060, 1, 30, 'IMAX-LIC-003'),
+(4, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1080, 1, 30, 'IMAX-LIC-004'),
+(5, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1100, 1, 30, 'IMAX-LIC-005'),
+(6, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1120, 1, 30, 'IMAX-LIC-006'),
+(7, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1140, 1, 30, 'IMAX-LIC-007'),
+(8, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1160, 1, 30, 'IMAX-LIC-008'),
+(9, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1180, 1, 30, 'IMAX-LIC-009'),
+(10, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1200, 1, 30, 'IMAX-LIC-010'),
+(11, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1220, 1, 30, 'IMAX-LIC-011'),
+(12, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1240, 1, 30, 'IMAX-LIC-012'),
+(13, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1260, 1, 30, 'IMAX-LIC-013'),
+(14, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1280, 1, 30, 'IMAX-LIC-014'),
+(15, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1300, 1, 30, 'IMAX-LIC-015'),
+(16, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1320, 1, 30, 'IMAX-LIC-016'),
+(17, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1340, 1, 30, 'IMAX-LIC-017'),
+(18, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1360, 1, 30, 'IMAX-LIC-018'),
+(19, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1380, 1, 30, 'IMAX-LIC-019'),
+(20, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1400, 1, 30, 'IMAX-LIC-020'),
+(21, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1420, 1, 30, 'IMAX-LIC-021'),
+(22, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1440, 1, 30, 'IMAX-LIC-022'),
+(23, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1460, 1, 30, 'IMAX-LIC-023'),
+(24, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1480, 1, 30, 'IMAX-LIC-024'),
+(25, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1500, 1, 30, 'IMAX-LIC-025'),
+(26, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1520, 1, 30, 'IMAX-LIC-026'),
+(27, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1540, 1, 30, 'IMAX-LIC-027'),
+(28, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1560, 1, 30, 'IMAX-LIC-028'),
+(29, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1580, 1, 30, 'IMAX-LIC-029'),
+(30, 'Dual 4K Laser', '1.43:1', 1, 26.5, 12, 1600, 1, 30, 'IMAX-LIC-030');
 GO
 
 -- -------------------------------------------------------------------------
 -- Data Ingestion: GoldScreen (30 tuples)
 -- -------------------------------------------------------------------------
-INSERT INTO GoldScreen (Screen_ID, Lounge_Service_Type, Recliner_Model, Butler_Service_Enabled, Complimentary_Snack_Tier, Call_Button_Active) VALUES
-(31, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(32, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(33, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(34, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(35, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(36, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(37, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(38, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(39, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(40, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(41, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(42, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(43, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(44, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(45, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(46, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(47, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(48, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(49, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(50, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(51, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(52, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(53, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(54, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(55, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(56, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(57, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(58, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(59, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1),
-(60, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1);
+INSERT INTO GoldScreen (Screen_ID, Lounge_Service_Type, Recliner_Model, Butler_Service_Enabled, Complimentary_Snack_Tier, Call_Button_Active, USB_Charging_Speed_Watts, Legrest_Angle_Max, Pillow_Blanket_Provided, Lounge_Access_Code) VALUES
+(31, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-031'),
+(32, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-032'),
+(33, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-033'),
+(34, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-034'),
+(35, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-035'),
+(36, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-036'),
+(37, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-037'),
+(38, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-038'),
+(39, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-039'),
+(40, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-040'),
+(41, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-041'),
+(42, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-042'),
+(43, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-043'),
+(44, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-044'),
+(45, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-045'),
+(46, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-046'),
+(47, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-047'),
+(48, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-048'),
+(49, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-049'),
+(50, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-050'),
+(51, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-051'),
+(52, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-052'),
+(53, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-053'),
+(54, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-054'),
+(55, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-055'),
+(56, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-056'),
+(57, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-057'),
+(58, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-058'),
+(59, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-059'),
+(60, 'Full Dining Service', 'La-Z-Boy Cinema Luxe', 1, 'Platinum Combo', 1, 45, 160, 1, 'GOLD-LOUNGE-060');
 GO
 
 -- -------------------------------------------------------------------------
 -- Data Ingestion: PremiumScreen (30 tuples)
 -- -------------------------------------------------------------------------
-INSERT INTO PremiumScreen (Screen_ID, Luxury_Level, Private_Balcony_Seats, Wine_Bar_Access, VIP_Restroom_Access, Heated_Seats) VALUES
-(61, 'Presidential VIP', 16, 1, 1, 1),
-(62, 'Presidential VIP', 16, 1, 1, 1),
-(63, 'Presidential VIP', 16, 1, 1, 1),
-(64, 'Presidential VIP', 16, 1, 1, 1),
-(65, 'Presidential VIP', 16, 1, 1, 1),
-(66, 'Presidential VIP', 16, 1, 1, 1),
-(67, 'Presidential VIP', 16, 1, 1, 1),
-(68, 'Presidential VIP', 16, 1, 1, 1),
-(69, 'Presidential VIP', 16, 1, 1, 1),
-(70, 'Presidential VIP', 16, 1, 1, 1),
-(71, 'Presidential VIP', 16, 1, 1, 1),
-(72, 'Presidential VIP', 16, 1, 1, 1),
-(73, 'Presidential VIP', 16, 1, 1, 1),
-(74, 'Presidential VIP', 16, 1, 1, 1),
-(75, 'Presidential VIP', 16, 1, 1, 1),
-(76, 'Presidential VIP', 16, 1, 1, 1),
-(77, 'Presidential VIP', 16, 1, 1, 1),
-(78, 'Presidential VIP', 16, 1, 1, 1),
-(79, 'Presidential VIP', 16, 1, 1, 1),
-(80, 'Presidential VIP', 16, 1, 1, 1),
-(81, 'Presidential VIP', 16, 1, 1, 1),
-(82, 'Presidential VIP', 16, 1, 1, 1),
-(83, 'Presidential VIP', 16, 1, 1, 1),
-(84, 'Presidential VIP', 16, 1, 1, 1),
-(85, 'Presidential VIP', 16, 1, 1, 1),
-(86, 'Presidential VIP', 16, 1, 1, 1),
-(87, 'Presidential VIP', 16, 1, 1, 1),
-(88, 'Presidential VIP', 16, 1, 1, 1),
-(89, 'Presidential VIP', 16, 1, 1, 1),
-(90, 'Presidential VIP', 16, 1, 1, 1);
+INSERT INTO PremiumScreen (Screen_ID, Luxury_Level, Private_Balcony_Seats, Wine_Bar_Access, VIP_Restroom_Access, Heated_Seats, Acoustic_Damping_Rating, Coat_Check_Available, Concierge_Desk_Station, Noise_Isolation_Db) VALUES
+(61, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk B', 66),
+(62, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk C', 67),
+(63, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk D', 68),
+(64, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk A', 69),
+(65, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk B', 70),
+(66, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk C', 71),
+(67, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk D', 72),
+(68, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk A', 73),
+(69, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk B', 74),
+(70, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk C', 65),
+(71, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk D', 66),
+(72, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk A', 67),
+(73, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk B', 68),
+(74, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk C', 69),
+(75, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk D', 70),
+(76, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk A', 71),
+(77, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk B', 72),
+(78, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk C', 73),
+(79, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk D', 74),
+(80, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk A', 65),
+(81, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk B', 66),
+(82, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk C', 67),
+(83, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk D', 68),
+(84, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk A', 69),
+(85, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk B', 70),
+(86, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk C', 71),
+(87, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk D', 72),
+(88, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk A', 73),
+(89, 'Presidential VIP', 16, 0, 1, 1, 'Class A', 1, 'VIP Desk B', 74),
+(90, 'Presidential VIP', 16, 1, 1, 1, 'Class A', 1, 'VIP Desk C', 65);
 GO
 
 -- -------------------------------------------------------------------------
 -- Data Ingestion: SilverScreen (30 tuples)
 -- -------------------------------------------------------------------------
-INSERT INTO SilverScreen (Screen_ID, Discount_Tier_Percent, Economy_Bundle_Eligible, Student_Pass_Accepted, Group_Discount_Active, Free_Refill_Eligible) VALUES
-(91, 20, 1, 1, 1, 0),
-(92, 20, 1, 1, 1, 0),
-(93, 20, 1, 1, 1, 0),
-(94, 20, 1, 1, 1, 0),
-(95, 20, 1, 1, 1, 0),
-(96, 20, 1, 1, 1, 0),
-(97, 20, 1, 1, 1, 0),
-(98, 20, 1, 1, 1, 0),
-(99, 20, 1, 1, 1, 0),
-(100, 20, 1, 1, 1, 0),
-(101, 20, 1, 1, 1, 0),
-(102, 20, 1, 1, 1, 0),
-(103, 20, 1, 1, 1, 0),
-(104, 20, 1, 1, 1, 0),
-(105, 20, 1, 1, 1, 0),
-(106, 20, 1, 1, 1, 0),
-(107, 20, 1, 1, 1, 0),
-(108, 20, 1, 1, 1, 0),
-(109, 20, 1, 1, 1, 0),
-(110, 20, 1, 1, 1, 0),
-(111, 20, 1, 1, 1, 0),
-(112, 20, 1, 1, 1, 0),
-(113, 20, 1, 1, 1, 0),
-(114, 20, 1, 1, 1, 0),
-(115, 20, 1, 1, 1, 0),
-(116, 20, 1, 1, 1, 0),
-(117, 20, 1, 1, 1, 0),
-(118, 20, 1, 1, 1, 0),
-(119, 20, 1, 1, 1, 0),
-(120, 20, 1, 1, 1, 0);
+INSERT INTO SilverScreen (Screen_ID, Discount_Tier_Percent, Economy_Bundle_Eligible, Student_Pass_Accepted, Group_Discount_Active, Free_Refill_Eligible, Aisle_Ramp_Access, Booster_Seat_Quantity, Bulk_Ticket_Eligible, Matinee_Discount_Rate) VALUES
+(91, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(92, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(93, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(94, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(95, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(96, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(97, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(98, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(99, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(100, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(101, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(102, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(103, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(104, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(105, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(106, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(107, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(108, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(109, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(110, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(111, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(112, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(113, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(114, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(115, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(116, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(117, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(118, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(119, 20, 1, 1, 1, 0, 1, 25, 1, 0.25),
+(120, 20, 1, 1, 1, 0, 1, 25, 1, 0.25);
 GO
 
 -- -------------------------------------------------------------------------
@@ -1128,42 +1153,42 @@ GO
 -- -------------------------------------------------------------------------
 -- Data Ingestion: Concession_Item_Order (35 tuples)
 -- -------------------------------------------------------------------------
-INSERT INTO Concession_Item_Order (Order_ID, Item_ID, Quantity, Unit_Price_Charged, Subtotal, Notes) VALUES
-(1, 2, 1, 550.0, 550.0, 'Extra butter'),
-(2, 3, 1, 680.0, 680.0, 'Extra butter'),
-(3, 4, 2, 180.0, 360.0, 'Cold drink'),
-(4, 5, 1, 190.0, 190.0, 'Cold drink'),
-(5, 6, 1, 180.0, 180.0, 'Cold drink'),
-(6, 7, 2, 180.0, 360.0, 'Cold drink'),
-(7, 8, 1, 90.0, 90.0, 'Cold drink'),
-(8, 9, 1, 480.0, 480.0, 'Standard order'),
-(9, 10, 2, 450.0, 900.0, 'Standard order'),
-(10, 11, 1, 720.0, 720.0, 'Standard order'),
-(11, 12, 1, 580.0, 580.0, 'Standard order'),
-(12, 13, 2, 420.0, 840.0, 'Standard order'),
-(13, 14, 1, 320.0, 320.0, 'Standard order'),
-(14, 15, 1, 240.0, 240.0, 'Standard order'),
-(15, 16, 2, 280.0, 560.0, 'Standard order'),
-(16, 17, 1, 260.0, 260.0, 'Standard order'),
-(17, 18, 1, 250.0, 250.0, 'Standard order'),
-(18, 19, 2, 290.0, 580.0, 'Standard order'),
-(19, 20, 1, 180.0, 180.0, 'Standard order'),
-(20, 21, 1, 1250.0, 1250.0, 'Standard order'),
-(21, 22, 2, 2100.0, 4200.0, 'Standard order'),
-(22, 23, 1, 650.0, 650.0, 'Standard order'),
-(23, 24, 1, 580.0, 580.0, 'Standard order'),
-(24, 25, 2, 380.0, 760.0, 'Standard order'),
-(25, 26, 1, 420.0, 420.0, 'Standard order'),
-(26, 27, 1, 260.0, 260.0, 'Standard order'),
-(27, 28, 2, 220.0, 440.0, 'Standard order'),
-(28, 1, 1, 350.0, 350.0, 'Extra butter'),
-(29, 2, 1, 550.0, 550.0, 'Extra butter'),
-(30, 3, 2, 680.0, 1360.0, 'Extra butter'),
-(31, 4, 1, 180.0, 180.0, 'Cold drink'),
-(32, 5, 1, 190.0, 190.0, 'Cold drink'),
-(33, 6, 2, 180.0, 360.0, 'Cold drink'),
-(34, 7, 1, 180.0, 180.0, 'Cold drink'),
-(35, 8, 1, 90.0, 90.0, 'Cold drink');
+INSERT INTO Concession_Item_Order (Order_ID, Item_ID, Quantity, Unit_Price_Charged, Discount_Applied, Tax_Amount, Subtotal, Preparation_Status, Special_Instructions, Dispensed_Timestamp) VALUES
+(1, 2, 1, 550.0, 0.0, 88.0, 638.0, 'Prepared', 'Extra butter', '2024-12-02 18:50:00'),
+(2, 3, 1, 680.0, 0.0, 108.8, 788.8, 'Prepared', 'Extra butter', '2024-12-03 18:50:00'),
+(3, 4, 2, 180.0, 0.0, 57.6, 417.6, 'Prepared', 'Cold drink', '2024-12-04 18:50:00'),
+(4, 5, 1, 190.0, 0.0, 30.4, 220.4, 'Prepared', 'Cold drink', '2024-12-05 18:50:00'),
+(5, 6, 1, 180.0, 25.0, 24.8, 179.8, 'Prepared', 'Cold drink', '2024-12-06 18:50:00'),
+(6, 7, 2, 180.0, 0.0, 57.6, 417.6, 'Prepared', 'Cold drink', '2024-12-07 18:50:00'),
+(7, 8, 1, 90.0, 0.0, 14.4, 104.4, 'Prepared', 'Cold drink', '2024-12-08 18:50:00'),
+(8, 9, 1, 480.0, 0.0, 76.8, 556.8, 'Prepared', 'Standard packaging', '2024-12-09 18:50:00'),
+(9, 10, 2, 450.0, 0.0, 144.0, 1044.0, 'Prepared', 'Standard packaging', '2024-12-10 18:50:00'),
+(10, 11, 1, 720.0, 25.0, 111.2, 806.2, 'Prepared', 'Standard packaging', '2024-12-11 18:50:00'),
+(11, 12, 1, 580.0, 0.0, 92.8, 672.8, 'Prepared', 'Standard packaging', '2024-12-12 18:50:00'),
+(12, 13, 2, 420.0, 0.0, 134.4, 974.4, 'Prepared', 'Standard packaging', '2024-12-13 18:50:00'),
+(13, 14, 1, 320.0, 0.0, 51.2, 371.2, 'Prepared', 'Standard packaging', '2024-12-14 18:50:00'),
+(14, 15, 1, 240.0, 0.0, 38.4, 278.4, 'Prepared', 'Standard packaging', '2024-12-15 18:50:00'),
+(15, 16, 2, 280.0, 25.0, 85.6, 620.6, 'Prepared', 'Standard packaging', '2024-12-16 18:50:00'),
+(16, 17, 1, 260.0, 0.0, 41.6, 301.6, 'Prepared', 'Standard packaging', '2024-12-17 18:50:00'),
+(17, 18, 1, 250.0, 0.0, 40.0, 290.0, 'Prepared', 'Standard packaging', '2024-12-18 18:50:00'),
+(18, 19, 2, 290.0, 0.0, 92.8, 672.8, 'Prepared', 'Standard packaging', '2024-12-19 18:50:00'),
+(19, 20, 1, 180.0, 0.0, 28.8, 208.8, 'Prepared', 'Standard packaging', '2024-12-20 18:50:00'),
+(20, 21, 1, 1250.0, 25.0, 196.0, 1421.0, 'Prepared', 'Standard packaging', '2024-12-21 18:50:00'),
+(21, 22, 2, 2100.0, 0.0, 672.0, 4872.0, 'Prepared', 'Standard packaging', '2024-12-22 18:50:00'),
+(22, 23, 1, 650.0, 0.0, 104.0, 754.0, 'Prepared', 'Standard packaging', '2024-12-23 18:50:00'),
+(23, 24, 1, 580.0, 0.0, 92.8, 672.8, 'Prepared', 'Standard packaging', '2024-12-24 18:50:00'),
+(24, 25, 2, 380.0, 0.0, 121.6, 881.6, 'Prepared', 'Standard packaging', '2024-12-25 18:50:00'),
+(25, 26, 1, 420.0, 25.0, 63.2, 458.2, 'Prepared', 'Standard packaging', '2024-12-26 18:50:00'),
+(26, 27, 1, 260.0, 0.0, 41.6, 301.6, 'Prepared', 'Standard packaging', '2024-12-27 18:50:00'),
+(27, 28, 2, 220.0, 0.0, 70.4, 510.4, 'Prepared', 'Standard packaging', '2024-12-28 18:50:00'),
+(28, 1, 1, 350.0, 0.0, 56.0, 406.0, 'Prepared', 'Extra butter', '2024-12-01 18:50:00'),
+(29, 2, 1, 550.0, 0.0, 88.0, 638.0, 'Prepared', 'Extra butter', '2024-12-02 18:50:00'),
+(30, 3, 2, 680.0, 25.0, 213.6, 1548.6, 'Prepared', 'Extra butter', '2024-12-03 18:50:00'),
+(31, 4, 1, 180.0, 0.0, 28.8, 208.8, 'Prepared', 'Cold drink', '2024-12-04 18:50:00'),
+(32, 5, 1, 190.0, 0.0, 30.4, 220.4, 'Prepared', 'Cold drink', '2024-12-05 18:50:00'),
+(33, 6, 2, 180.0, 0.0, 57.6, 417.6, 'Prepared', 'Cold drink', '2024-12-06 18:50:00'),
+(34, 7, 1, 180.0, 0.0, 28.8, 208.8, 'Prepared', 'Cold drink', '2024-12-07 18:50:00'),
+(35, 8, 1, 90.0, 25.0, 10.4, 75.4, 'Prepared', 'Cold drink', '2024-12-08 18:50:00');
 GO
 
 -- -------------------------------------------------------------------------

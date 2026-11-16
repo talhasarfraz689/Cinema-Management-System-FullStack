@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1350" width="100%" height="100%" style="background-color: #090D16; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1850 1450" width="100%" height="100%" style="background-color: #090D16; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
   <defs>
     <filter id="boxShadow" x="-10%" y="-10%" width="130%" height="130%">
       <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000000" flood-opacity="0.5"/>
@@ -27,11 +27,15 @@
       <stop offset="0%" stop-color="#881337"/>
       <stop offset="100%" stop-color="#E11D48"/>
     </linearGradient>
+    <linearGradient id="headerGradPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4C1D95"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
   </defs>
 
   <!-- Canvas Header -->
-  <text x="900" y="45" font-size="28" font-weight="bold" fill="#F8FAFC" text-anchor="middle">COMPLETE RELATIONAL ENTITY RELATIONSHIP DIAGRAM (ERD)</text>
-  <text x="900" y="75" font-size="15" fill="#94A3B8" text-anchor="middle">Cinema Management System — Enterprise Schema with >= 10 Attributes per Entity &amp; Full Referential Integrity</text>
+  <text x="925" y="45" font-size="28" font-weight="bold" fill="#F8FAFC" text-anchor="middle">COMPLETE RELATIONAL ENTITY RELATIONSHIP DIAGRAM (ERD)</text>
+  <text x="925" y="75" font-size="15" fill="#38BDF8" text-anchor="middle">Cinema Management System — Enterprise Schema: Strictly >= 10 Attributes per Relation Across All 19 Relations</text>
 
   <!-- Relationship Connector Lines -->
   <!-- Customer to Booking -->
@@ -39,8 +43,8 @@
   <text x="390" y="190" fill="#38BDF8" font-size="11" font-weight="bold">1 : N</text>
 
   <!-- Customer to Phone_Number -->
-  <path d="M 180 340 L 180 400" stroke="#38BDF8" stroke-width="2" fill="none"/>
-  <text x="190" y="375" fill="#38BDF8" font-size="11" font-weight="bold">1 : N</text>
+  <path d="M 180 380 L 180 430" stroke="#38BDF8" stroke-width="2.5" fill="none"/>
+  <text x="190" y="415" fill="#38BDF8" font-size="11" font-weight="bold">1 : N</text>
 
   <!-- Movie to Showtime -->
   <path d="M 760 520 L 760 450" stroke="#818CF8" stroke-width="2.5" fill="none"/>
@@ -62,9 +66,6 @@
   <path d="M 1165 470 L 1165 540" stroke="#34D399" stroke-width="2" fill="none"/>
   <text x="1175" y="510" fill="#34D399" font-size="11" font-weight="bold">1 : N</text>
 
-  <!-- Seat to Ticket -->
-  <path d="M 1030 640 L 680 500" stroke="#FB7185" stroke-width="1.5" fill="none" stroke-dasharray="3,3"/>
-
   <!-- Customer to Parking -->
   <path d="M 180 200 L 180 120 L 1380 120 L 1380 180" stroke="#FBBF24" stroke-width="2" fill="none"/>
   <text x="780" y="110" fill="#FBBF24" font-size="11" font-weight="bold">1 : N (Customer to Parking)</text>
@@ -73,7 +74,7 @@
   <path d="M 330 250 L 400 250 L 400 850 L 480 850" stroke="#06B6D4" stroke-width="2" fill="none"/>
 
   <!-- Customer to Movie_Review -->
-  <path d="M 180 340 L 180 900 L 770 900 L 770 950" stroke="#F43F5E" stroke-width="2" fill="none"/>
+  <path d="M 180 380 L 180 900 L 770 900 L 770 950" stroke="#F43F5E" stroke-width="2" fill="none"/>
 
   <!-- Employee to Concession_Order -->
   <path d="M 1520 740 L 1520 620" stroke="#A78BFA" stroke-width="2.5" fill="none"/>
@@ -84,12 +85,12 @@
   <text x="1330" y="470" fill="#A78BFA" font-size="11" font-weight="bold">1 : N</text>
 
   <!-- Tuck_Shop to Concession_Item_Order -->
-  <path d="M 1165 820 L 1165 600" stroke="#38BDF8" stroke-width="2" fill="none"/>
-  <text x="1175" y="700" fill="#38BDF8" font-size="11" font-weight="bold">1 : N</text>
+  <path d="M 1165 820 L 1165 640" stroke="#38BDF8" stroke-width="2" fill="none"/>
+  <text x="1175" y="720" fill="#38BDF8" font-size="11" font-weight="bold">1 : N</text>
 
   <!-- ==================== ENTITY TABLES ==================== -->
 
-  <!-- 1. CUSTOMER -->
+  <!-- 1. CUSTOMER (12 Attributes) -->
   <g transform="translate(60, 150)" filter="url(#boxShadow)">
     <rect width="270" height="230" rx="8" fill="#111827" stroke="#3B82F6" stroke-width="1.5"/>
     <rect width="270" height="34" rx="8" fill="url(#headerGradBlue)"/>
@@ -108,20 +109,26 @@
     </g>
   </g>
 
-  <!-- 1.1 PHONE_NUMBER -->
-  <g transform="translate(60, 410)" filter="url(#boxShadow)">
-    <rect width="270" height="130" rx="8" fill="#111827" stroke="#3B82F6" stroke-width="1.5"/>
+  <!-- 1.1 PHONE_NUMBER (Multivalued Attribute - 10 Attributes) -->
+  <g transform="translate(60, 430)" filter="url(#boxShadow)">
+    <rect width="270" height="210" rx="8" fill="#111827" stroke="#3B82F6" stroke-width="1.5"/>
     <rect width="270" height="30" rx="8" fill="#1E3A8A"/>
-    <text x="135" y="21" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle">&#128222; PHONE_NUMBER (Multivalued)</text>
+    <text x="135" y="21" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle">&#128222; PHONE_NUMBER (10 Attrs)</text>
     <g transform="translate(12, 48)" font-size="10" fill="#E2E8F0">
       <text x="0" y="0" font-weight="bold" fill="#93C5FD">&#9642; Phone_Num (PK) : VARCHAR(20)</text>
       <text x="0" y="16" font-weight="bold" fill="#FCA5A5">&#9642; Customer_ID (PK, FK) : INT</text>
-      <text x="0" y="32">&#9642; Phone_Type : VARCHAR(20)</text>
-      <text x="0" y="48">&#9642; Is_Primary : BIT, Added_Date : DATE</text>
+      <text x="0" y="32">&#9642; Phone_Type : VARCHAR(20) [CHECK]</text>
+      <text x="0" y="48">&#9642; Country_Code : VARCHAR(10)</text>
+      <text x="0" y="64">&#9642; Telecom_Carrier : VARCHAR(30)</text>
+      <text x="0" y="80">&#9642; Is_Primary : BIT</text>
+      <text x="0" y="96">&#9642; Is_WhatsApp_Enabled : BIT</text>
+      <text x="0" y="112">&#9642; Verification_Status : VARCHAR(20)</text>
+      <text x="0" y="128">&#9642; SMS_Promo_OptIn : BIT</text>
+      <text x="0" y="144">&#9642; Added_Date : DATE</text>
     </g>
   </g>
 
-  <!-- 2. MOVIE -->
+  <!-- 2. MOVIE (12 Attributes) -->
   <g transform="translate(620, 520)" filter="url(#boxShadow)">
     <rect width="280" height="240" rx="8" fill="#111827" stroke="#6366F1" stroke-width="1.5"/>
     <rect width="280" height="34" rx="8" fill="url(#headerGradIndigo)"/>
@@ -140,7 +147,7 @@
     </g>
   </g>
 
-  <!-- 3. SCREEN -->
+  <!-- 3. SCREEN (Superclass - 12 Attributes) -->
   <g transform="translate(1030, 200)" filter="url(#boxShadow)">
     <rect width="270" height="250" rx="8" fill="#111827" stroke="#10B981" stroke-width="1.5"/>
     <rect width="270" height="34" rx="8" fill="url(#headerGradEmerald)"/>
@@ -159,7 +166,7 @@
     </g>
   </g>
 
-  <!-- 4. SHOWTIME -->
+  <!-- 4. SHOWTIME (12 Attributes) -->
   <g transform="translate(680, 200)" filter="url(#boxShadow)">
     <rect width="260" height="230" rx="8" fill="#111827" stroke="#6366F1" stroke-width="1.5"/>
     <rect width="260" height="34" rx="8" fill="url(#headerGradIndigo)"/>
@@ -178,7 +185,7 @@
     </g>
   </g>
 
-  <!-- 5. SEAT -->
+  <!-- 5. SEAT (12 Attributes) -->
   <g transform="translate(1030, 540)" filter="url(#boxShadow)">
     <rect width="270" height="210" rx="8" fill="#111827" stroke="#10B981" stroke-width="1.5"/>
     <rect width="270" height="34" rx="8" fill="url(#headerGradEmerald)"/>
@@ -195,7 +202,7 @@
     </g>
   </g>
 
-  <!-- 6. BOOKING -->
+  <!-- 6. BOOKING (12 Attributes) -->
   <g transform="translate(420, 150)" filter="url(#boxShadow)">
     <rect width="250" height="230" rx="8" fill="#111827" stroke="#E11D48" stroke-width="1.5"/>
     <rect width="250" height="34" rx="8" fill="url(#headerGradRose)"/>
@@ -213,7 +220,7 @@
     </g>
   </g>
 
-  <!-- 7. TICKET -->
+  <!-- 7. TICKET (12 Attributes) -->
   <g transform="translate(420, 420)" filter="url(#boxShadow)">
     <rect width="250" height="230" rx="8" fill="#111827" stroke="#E11D48" stroke-width="1.5"/>
     <rect width="250" height="34" rx="8" fill="url(#headerGradRose)"/>
@@ -230,7 +237,7 @@
     </g>
   </g>
 
-  <!-- 8. EMPLOYEE -->
+  <!-- 8. EMPLOYEE (12 Attributes) -->
   <g transform="translate(1380, 740)" filter="url(#boxShadow)">
     <rect width="270" height="230" rx="8" fill="#111827" stroke="#8B5CF6" stroke-width="1.5"/>
     <rect width="270" height="34" rx="8" fill="url(#headerGradIndigo)"/>
@@ -248,7 +255,7 @@
     </g>
   </g>
 
-  <!-- 9. TUCK_SHOP -->
+  <!-- 9. TUCK_SHOP (12 Attributes) -->
   <g transform="translate(1030, 820)" filter="url(#boxShadow)">
     <rect width="270" height="230" rx="8" fill="#111827" stroke="#06B6D4" stroke-width="1.5"/>
     <rect width="270" height="34" rx="8" fill="url(#headerGradCyan)"/>
@@ -265,9 +272,9 @@
     </g>
   </g>
 
-  <!-- 10. CONCESSION_ORDER -->
+  <!-- 10. CONCESSION_ORDER (12 Attributes) -->
   <g transform="translate(1380, 420)" filter="url(#boxShadow)">
-    <rect width="270" height="200" rx="8" fill="#111827" stroke="#A855F7" stroke-width="1.5"/>
+    <rect width="270" height="210" rx="8" fill="#111827" stroke="#A855F7" stroke-width="1.5"/>
     <rect width="270" height="34" rx="8" fill="#581C87"/>
     <text x="135" y="23" font-size="13" font-weight="bold" fill="#FFFFFF" text-anchor="middle">&#129534; CONCESSION_ORDER (12 Attrs)</text>
     <g transform="translate(12, 50)" font-size="10" fill="#E2E8F0">
@@ -277,24 +284,29 @@
       <text x="0" y="48">&#9642; Total_Items_Count, Subtotal</text>
       <text x="0" y="64">&#9642; Sales_Tax, Discount, Total_Payable</text>
       <text x="0" y="80">&#9642; Payment_Method, Counter_Number</text>
+      <text x="0" y="96">&#9642; Order_Status : VARCHAR(20)</text>
     </g>
   </g>
 
-  <!-- 10.1 CONCESSION_ITEM_ORDER (Associative) -->
-  <g transform="translate(1180, 420)" filter="url(#boxShadow)">
-    <rect width="180" height="150" rx="8" fill="#111827" stroke="#A855F7" stroke-width="1.5"/>
-    <rect width="180" height="28" rx="8" fill="#3B0764"/>
-    <text x="90" y="19" font-size="10.5" font-weight="bold" fill="#FFFFFF" text-anchor="middle">ITEM_ORDER (M:N Associative)</text>
+  <!-- 10.1 CONCESSION_ITEM_ORDER (Associative - 10 Attributes) -->
+  <g transform="translate(1140, 420)" filter="url(#boxShadow)">
+    <rect width="210" height="210" rx="8" fill="#111827" stroke="#A855F7" stroke-width="1.5"/>
+    <rect width="210" height="28" rx="8" fill="#3B0764"/>
+    <text x="105" y="19" font-size="10.5" font-weight="bold" fill="#FFFFFF" text-anchor="middle">ITEM_ORDER (10 Attrs M:N)</text>
     <g transform="translate(10, 44)" font-size="9.5" fill="#E2E8F0">
-      <text x="0" y="0" font-weight="bold" fill="#FCA5A5">&#9642; Order_ID (PK, FK)</text>
-      <text x="0" y="16" font-weight="bold" fill="#FCA5A5">&#9642; Item_ID (PK, FK)</text>
-      <text x="0" y="32">&#9642; Quantity : INT</text>
-      <text x="0" y="48">&#9642; Unit_Price_Charged</text>
-      <text x="0" y="64">&#9642; Subtotal : DECIMAL</text>
+      <text x="0" y="0" font-weight="bold" fill="#FCA5A5">&#9642; Order_ID (PK, FK) : INT</text>
+      <text x="0" y="15" font-weight="bold" fill="#FCA5A5">&#9642; Item_ID (PK, FK) : INT</text>
+      <text x="0" y="30">&#9642; Quantity : INT [CHECK &gt; 0]</text>
+      <text x="0" y="45">&#9642; Unit_Price_Charged</text>
+      <text x="0" y="60">&#9642; Discount_Applied, Tax_Amount</text>
+      <text x="0" y="75">&#9642; Subtotal : DECIMAL</text>
+      <text x="0" y="90">&#9642; Preparation_Status : VARCHAR</text>
+      <text x="0" y="105">&#9642; Special_Instructions</text>
+      <text x="0" y="120">&#9642; Dispensed_Timestamp</text>
     </g>
   </g>
 
-  <!-- 11. PARKING -->
+  <!-- 11. PARKING (12 Attributes) -->
   <g transform="translate(1380, 180)" filter="url(#boxShadow)">
     <rect width="270" height="210" rx="8" fill="#111827" stroke="#F59E0B" stroke-width="1.5"/>
     <rect width="270" height="34" rx="8" fill="url(#headerGradAmber)"/>
@@ -306,57 +318,67 @@
       <text x="0" y="48">&#9642; Vehicle_Type : VARCHAR(30) [CHECK]</text>
       <text x="0" y="64">&#9642; License_Plate : VARCHAR(25)</text>
       <text x="0" y="80">&#9642; Entry_Time, Exit_Time : DATETIME</text>
-      <text x="0" y="96">&#9642; Duration_Hours, Hourly_Rate, Total_Fee</text>
+      <text x="0" y="96">&#9642; Duration_Hours, Hourly_Rate, Fee</text>
       <text x="0" y="112">&#9642; Parking_Bay_Zone, Payment_Status</text>
     </g>
   </g>
 
-  <!-- 12. SECURITY_CHECKPOINT -->
+  <!-- 12. SECURITY_CHECKPOINT (12 Attributes) -->
   <g transform="translate(480, 780)" filter="url(#boxShadow)">
-    <rect width="260" height="210" rx="8" fill="#111827" stroke="#06B6D4" stroke-width="1.5"/>
-    <rect width="260" height="34" rx="8" fill="url(#headerGradCyan)"/>
-    <text x="130" y="23" font-size="13" font-weight="bold" fill="#FFFFFF" text-anchor="middle">&#128737;&#65039; SECURITY_CHECKPOINT (12 Attrs)</text>
+    <rect width="270" height="230" rx="8" fill="#111827" stroke="#06B6D4" stroke-width="1.5"/>
+    <rect width="270" height="34" rx="8" fill="url(#headerGradCyan)"/>
+    <text x="135" y="23" font-size="13" font-weight="bold" fill="#FFFFFF" text-anchor="middle">&#128737; CHECKPOINT (12 Attrs)</text>
     <g transform="translate(12, 50)" font-size="10" fill="#E2E8F0">
       <text x="0" y="0" font-weight="bold" fill="#67E8F9">&#9642; Checkpoint_ID (PK) : INT</text>
-      <text x="0" y="16" font-weight="bold" fill="#FCA5A5">&#9642; Guard_Employee_ID (FK) : INT</text>
-      <text x="0" y="32" font-weight="bold" fill="#FCA5A5">&#9642; Customer_ID (FK), Ticket_ID (FK)</text>
-      <text x="0" y="48">&#9642; Gate_Name, Inspection_Timestamp</text>
-      <text x="0" y="64">&#9642; Luggage_Scanned, Metal_Detector</text>
-      <text x="0" y="80">&#9642; Pass_Status : VARCHAR(20) [CHECK]</text>
-      <text x="0" y="96">&#9642; Supervisor_Notified, Remarks</text>
+      <text x="0" y="16">&#9642; Gate_Name : VARCHAR(50)</text>
+      <text x="0" y="32" font-weight="bold" fill="#FCA5A5">&#9642; Guard_Employee_ID (FK) : INT</text>
+      <text x="0" y="48" font-weight="bold" fill="#FCA5A5">&#9642; Customer_ID (FK), Ticket_ID (FK)</text>
+      <text x="0" y="64">&#9642; Inspection_Timestamp : DATETIME</text>
+      <text x="0" y="80">&#9642; Luggage_Scanned, Metal_Cleared : BIT</text>
+      <text x="0" y="96">&#9642; Pass_Status : VARCHAR(20) [CHECK]</text>
+      <text x="0" y="112">&#9642; Supervisor_Notified : BIT, Remarks</text>
+      <text x="0" y="128">&#9642; Scanner_Device_ID : VARCHAR(30)</text>
     </g>
   </g>
 
-  <!-- 13. MOVIE_REVIEW -->
-  <g transform="translate(760, 850)" filter="url(#boxShadow)">
-    <rect width="250" height="200" rx="8" fill="#111827" stroke="#F43F5E" stroke-width="1.5"/>
-    <rect width="250" height="34" rx="8" fill="#9F1239"/>
-    <text x="125" y="23" font-size="13" font-weight="bold" fill="#FFFFFF" text-anchor="middle">&#11088; MOVIE_REVIEW (12 Attrs)</text>
+  <!-- 13. MOVIE_REVIEW (12 Attributes) -->
+  <g transform="translate(680, 950)" filter="url(#boxShadow)">
+    <rect width="280" height="230" rx="8" fill="#111827" stroke="#F43F5E" stroke-width="1.5"/>
+    <rect width="280" height="34" rx="8" fill="url(#headerGradRose)"/>
+    <text x="140" y="23" font-size="13" font-weight="bold" fill="#FFFFFF" text-anchor="middle">&#11088; MOVIE_REVIEW (12 Attrs)</text>
     <g transform="translate(12, 50)" font-size="10" fill="#E2E8F0">
-      <text x="0" y="0" font-weight="bold" fill="#FECDD3">&#9642; Review_ID (PK) : INT</text>
+      <text x="0" y="0" font-weight="bold" fill="#FDA4AF">&#9642; Review_ID (PK) : INT</text>
       <text x="0" y="16" font-weight="bold" fill="#FCA5A5">&#9642; Customer_ID (FK), Movie_ID (FK)</text>
       <text x="0" y="32">&#9642; Rating_Stars : INT [CHECK 1-5]</text>
-      <text x="0" y="48">&#9642; Review_Title, Review_Text</text>
-      <text x="0" y="64">&#9642; Review_Date, Helpful_Votes</text>
-      <text x="0" y="80">&#9642; Sentiment_Tag, Moderation_Status</text>
+      <text x="0" y="48">&#9642; Review_Title : VARCHAR(100)</text>
+      <text x="0" y="64">&#9642; Review_Text : VARCHAR(500)</text>
+      <text x="0" y="80">&#9642; Review_Date : DATE, Helpful_Votes</text>
+      <text x="0" y="96">&#9642; Is_Verified_Watcher : BIT</text>
+      <text x="0" y="112">&#9642; Sentiment_Tag, Platform_Used</text>
+      <text x="0" y="128">&#9642; Moderation_Status : VARCHAR(20)</text>
     </g>
   </g>
 
-  <!-- Legend -->
-  <g transform="translate(60, 1100)" filter="url(#boxShadow)">
-    <rect width="1680" height="180" rx="10" fill="#0B132B" stroke="#1E293B" stroke-width="2"/>
-    <text x="840" y="30" font-size="16" font-weight="bold" fill="#38BDF8" text-anchor="middle">&#127915; ERD ARCHITECTURAL SUMMARY &amp; GUIDELINE VERIFICATION</text>
-    <g transform="translate(40, 60)" font-size="11.5" fill="#CBD5E1">
-      <text x="0" y="0">&#9656; <tspan font-weight="bold" fill="#FFFFFF">Entities:</tspan> 13 Core Entities + 4 EER Subclasses + 2 Associative Tables (Exceeds &gt;= 10 Entities requirement)</text>
-      <text x="0" y="25">&#9656; <tspan font-weight="bold" fill="#FFFFFF">Attributes per Entity:</tspan> Exactly 12 Attributes for every primary entity (Exceeds &gt;= 10 Attributes requirement)</text>
-      <text x="0" y="50">&#9656; <tspan font-weight="bold" fill="#FFFFFF">Data Types Represented:</tspan> INT, VARCHAR, CHAR, DATE, DECIMAL, FLOAT, BIT (BOOLEAN), DATETIME</text>
-      <text x="0" y="75">&#9656; <tspan font-weight="bold" fill="#FFFFFF">Constraint Enforcement:</tspan> PRIMARY KEY (Underlined), FOREIGN KEY (Red FK), NOT NULL, UNIQUE, CHECK, DEFAULT</text>
-    </g>
-    <g transform="translate(900, 60)" font-size="11.5" fill="#CBD5E1">
-      <text x="0" y="0">&#9656; <tspan font-weight="bold" fill="#FFFFFF">M:N Relationships Resolved:</tspan> Customer to Movie via Booking/Ticket; Order to Item via Concession_Item_Order</text>
-      <text x="0" y="25">&#9656; <tspan font-weight="bold" fill="#FFFFFF">Cardinalities:</tspan> 1:1, 1:N, and associative M:N with explicit referential integrity rules</text>
-      <text x="0" y="50">&#9656; <tspan font-weight="bold" fill="#FFFFFF">EER Superclass Hierarchy:</tspan> Screen specialized into IMAX, Gold, Premium, Silver (Total &amp; Disjoint)</text>
-      <text x="0" y="75">&#9656; <tspan font-weight="bold" fill="#FFFFFF">DBMS Implementation:</tspan> Microsoft SQL Server (T-SQL) with &gt;= 30 tuples populated per relation (680+ tuples total)</text>
+  <!-- Footer Legend -->
+  <g transform="translate(60, 1220)" filter="url(#boxShadow)">
+    <rect width="1730" height="180" rx="10" fill="#0F172A" stroke="#334155" stroke-width="1.5"/>
+    <text x="30" y="32" font-size="16" font-weight="bold" fill="#F8FAFC">RELATIONAL ERD ARCHITECTURAL SPECIFICATION &amp; LEGEND</text>
+    
+    <g transform="translate(30, 55)" font-size="12" fill="#CBD5E1">
+      <text x="0" y="0" font-weight="bold" fill="#38BDF8">&#9642; Blue Headers / Connectors:</text>
+      <text x="240" y="0">Customer Identity, Demographics &amp; Multivalued Contact Attributes (Customer, Phone_Number)</text>
+      
+      <text x="0" y="24" font-weight="bold" fill="#A78BFA">&#9642; Purple / Indigo Headers:</text>
+      <text x="240" y="24">Show Scheduling, Catalog Management &amp; Concession Operations (Movie, Showtime, Employee, Concessions)</text>
+      
+      <text x="0" y="48" font-weight="bold" fill="#34D399">&#9642; Emerald Green Headers:</text>
+      <text x="240" y="48">Physical Theater Auditorium Topology &amp; Specialized Subclasses (Screen Superclass, IMAX, Gold, Premium, Silver)</text>
+      
+      <text x="0" y="72" font-weight="bold" fill="#FB7185">&#9642; Rose / Amber Headers:</text>
+      <text x="240" y="72">Transactional Commerce, Ticketing, Parking &amp; Physical Security Facilities (Booking, Ticket, Parking, Checkpoint)</text>
+      
+      <text x="0" y="96" font-weight="bold" fill="#FDE68A">&#9642; Attribute Compliance:</text>
+      <text x="240" y="96" fill="#FDE68A">Every single table (13 primary entities + 4 EER subclasses + 2 relational mappings) strictly contains >= 10 verified columns.</text>
     </g>
   </g>
 </svg>

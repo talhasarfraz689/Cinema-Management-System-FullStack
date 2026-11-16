@@ -34,15 +34,17 @@ Every component mandated by the **BSCS Database Systems Term Project Guidelines*
 | **4** | Project Introduction | MS Word | `1_Project_Introduction.docx` & Master Report (Sec. 1) | ✅ **Completed** |
 | **5** | Literature Review & References | MS Word | `2_Literature_Review_and_References.docx` (6 APA Citations) | ✅ **Completed** |
 | **6** | Project Scenario | MS Word | `3_Project_Scenario.docx` (6 Roles, Rules, Workflow) | ✅ **Completed** |
-| **7** | Entity Relationship Diagram (ERD) | MS Visio / SVG | `ERD_Diagram.svg` (13 Entities, EACH with ≥ 10 Attrs) | ✅ **Completed** |
-| **8** | Enhanced ER Diagram (EER) | Handwritten Guide / SVG | `EER_Diagram.svg` & `Handwritten_EER_and_Normalization_Worksheet.md` | ✅ **Completed** |
+| **7** | Entity Relationship Diagram (ERD) | MS Visio / SVG | `ERD_Diagram.svg` (All 19 Relations, strictly ≥ 10 Attrs) | ✅ **Completed** |
+| **8** | Enhanced ER Diagram (EER) | Handwritten Guide / SVG | `EER_Diagram.svg`, `Handwritten_EER_Diagram_Template.svg` | ✅ **Completed** |
 | **9** | EER to Relational Model Mapping | Handwritten Guide / Word | `4_Database_Design_ERD_EER_and_Relational_Mapping.docx` | ✅ **Completed** |
 | **10** | DDL Implementation | SQL + Outputs | `Cinema_Management_System_Final_Complete.sql` (Sec. 8.1) | ✅ **Completed** |
 | **11** | Database Diagram | DBMS Diagram | Database Diagram Specification & `ERD_Diagram.svg` | ✅ **Completed** |
 | **12** | DML Implementation | SQL + Outputs | `Cinema_Management_System_Final_Complete.sql` (≥ 30 Tuples/Table) | ✅ **Completed** |
 | **13** | SQL Joins (12 Queries) | SQL + Outputs | Master Script & Report (2 Inner, 2 Left, 2 Right, 2 Full, 2 Cross, 2 Self) | ✅ **Completed** |
 | **14** | SQL Subqueries (20 Queries) | SQL + Outputs | Master Script & Report (Single, Multi, Nested, Correlated, EXISTS, ANY/ALL) | ✅ **Completed** |
-| **15** | Normalization up to BCNF | Handwritten + Word | `5_Database_Normalization_BCNF.docx` & Worksheet | ✅ **Completed** |
+| **15** | Normalization up to BCNF | Handwritten + Word | `5_Database_Normalization_BCNF.docx`, `Handwritten_BCNF_Normalization_Sheet.svg` | ✅ **Completed** |
+| **16** | **SQL Execution Evidence Report** | Markdown + Word | `SQL_Query_Execution_Evidence.md` & `6_SQL_Queries_and_Execution_Evidence.docx` | ✅ **Completed** |
+| **17** | **Printable Handwritten Guide** | Word / Markdown / SVG | `Handwritten_Submission_Worksheet_A4_Printable.docx` & Worksheet | ✅ **Completed** |
 | **--** | **Master Project Report** | MS Word | `Cinema_Management_System_Complete_Report.docx` (All 9 Phases) | ✅ **Completed** |
 
 ---
@@ -72,31 +74,31 @@ graph TD
 * **Minimum Entities Required:** At least 10 entities.  
   👉 **Our Implementation:** **13 Primary Entities + 4 EER Subclasses + 2 Associative Tables = 19 Tables Total!**
 * **Minimum Attributes Required:** **Each entity MUST contain at least 10 attributes!**  
-  👉 **Our Implementation:** **Every primary entity strictly possesses 12 attributes** of diverse primitive data types (`INT`, `VARCHAR`, `CHAR`, `DATE`, `DECIMAL`, `FLOAT`, `BIT`/`BOOLEAN`, `DATETIME`).
+  👉 **Our Implementation:** **Every single relation (all 19 tables without exception) strictly possesses at least 10 to 12 attributes** of diverse primitive data types (`INT`, `VARCHAR`, `CHAR`, `DATE`, `DECIMAL`, `FLOAT`, `BIT`/`BOOLEAN`, `DATETIME`). Even specialized EER subclasses and associative tables possess 10 attributes!
 
-### 2. Primary Entity Catalog
+### 2. Complete Relational Entity Catalog (All 19 Tables Verified)
 
-| No. | Entity Name | Total Attrs | Primary Key (PK) | Foreign Keys (FK) | Data Types Represented |
-| :---: | :--- | :---: | :--- | :--- | :--- |
-| **1** | `Customer` | 12 | `Customer_ID` | None | INT, VARCHAR, CHAR, DATE, BIT |
-| **1.1** | `Phone_Number` | 5 | `(Phone_Num, Customer_ID)` | `Customer_ID` | VARCHAR, INT, BIT, DATE |
-| **2** | `Movie` | 12 | `Movie_ID` | None | INT, VARCHAR, DATE, DECIMAL, BIT |
-| **3** | `Screen` *(Superclass)* | 12 | `Screen_ID` | None | INT, VARCHAR, FLOAT, BIT |
-| **3.1** | `IMAXScreen` *(Subclass)* | 6 | `Screen_ID` | `Screen_ID` | INT, VARCHAR, BIT, FLOAT |
-| **3.2** | `GoldScreen` *(Subclass)* | 6 | `Screen_ID` | `Screen_ID` | INT, VARCHAR, BIT |
-| **3.3** | `PremiumScreen` *(Subclass)* | 6 | `Screen_ID` | `Screen_ID` | INT, VARCHAR, BIT |
-| **3.4** | `SilverScreen` *(Subclass)* | 6 | `Screen_ID` | `Screen_ID` | INT, VARCHAR, BIT |
-| **4** | `Showtime` | 12 | `Show_ID` | `Movie_ID`, `Screen_ID` | INT, DATE, DATETIME, DECIMAL, VARCHAR |
-| **5** | `Seat` | 12 | `Seat_ID` | `Screen_ID` | INT, CHAR, VARCHAR, DECIMAL, BIT |
-| **6** | `Booking` | 12 | `Booking_ID` | `Customer_ID`, `Show_ID` | INT, DATETIME, DECIMAL, VARCHAR |
-| **7** | `Ticket` | 12 | `Ticket_ID` | `Booking_ID`, `Seat_ID` | INT, VARCHAR, DECIMAL, BIT, DATETIME |
-| **8** | `Employee` | 12 | `Employee_ID` | None | INT, VARCHAR, DECIMAL, DATE, FLOAT |
-| **9** | `Tuck_Shop` | 12 | `Item_ID` | None | INT, VARCHAR, DECIMAL, DATE, BIT |
-| **10** | `Concession_Order` | 12 | `Order_ID` | `Customer_ID`, `Employee_ID` | INT, DATETIME, DECIMAL, VARCHAR |
-| **10.1** | `Concession_Item_Order` | 6 | `(Order_ID, Item_ID)` | `Order_ID`, `Item_ID` | INT, DECIMAL, VARCHAR |
-| **11** | `Parking` | 12 | `Parking_ID` | `Customer_ID` | INT, VARCHAR, DATETIME, FLOAT, DECIMAL |
-| **12** | `Security_Checkpoint` | 12 | `Checkpoint_ID` | `Guard_ID`, `Customer_ID`, `Ticket_ID` | INT, VARCHAR, DATETIME, BIT |
-| **13** | `Movie_Review` | 12 | `Review_ID` | `Customer_ID`, `Movie_ID` | INT, VARCHAR, DATE, BIT |
+| No. | Entity Name | Table Category | Total Attrs | Primary Key (PK) | Foreign Keys (FK) | Data Types Represented |
+| :---: | :--- | :--- | :---: | :--- | :--- | :--- |
+| **1** | `Customer` | Primary Entity | **12** | `Customer_ID` | None | INT, VARCHAR, CHAR, DATE, BIT |
+| **1.1** | `Phone_Number` | Multivalued Contact | **10** | `(Phone_Num, Customer_ID)` | `Customer_ID` | VARCHAR, INT, BIT, DATE |
+| **2** | `Movie` | Primary Entity | **12** | `Movie_ID` | None | INT, VARCHAR, DATE, DECIMAL, BIT |
+| **3** | `Screen` | Superclass Entity | **12** | `Screen_ID` | None | INT, VARCHAR, FLOAT, BIT |
+| **3.1** | `IMAXScreen` | EER Subclass | **10** | `Screen_ID` | `Screen_ID` (Screen) | INT, VARCHAR, BIT, FLOAT |
+| **3.2** | `GoldScreen` | EER Subclass | **10** | `Screen_ID` | `Screen_ID` (Screen) | INT, VARCHAR, BIT, INT |
+| **3.3** | `PremiumScreen` | EER Subclass | **10** | `Screen_ID` | `Screen_ID` (Screen) | INT, VARCHAR, BIT, INT |
+| **3.4** | `SilverScreen` | EER Subclass | **10** | `Screen_ID` | `Screen_ID` (Screen) | INT, VARCHAR, BIT, REAL |
+| **4** | `Showtime` | Primary Entity | **12** | `Show_ID` | `Movie_ID`, `Screen_ID` | INT, DATE, DATETIME, DECIMAL, VARCHAR |
+| **5** | `Seat` | Primary Entity | **12** | `Seat_ID` | `Screen_ID` | INT, CHAR, VARCHAR, DECIMAL, BIT |
+| **6** | `Booking` | Primary Entity | **12** | `Booking_ID` | `Customer_ID`, `Show_ID` | INT, DATETIME, DECIMAL, VARCHAR |
+| **7** | `Ticket` | Primary Entity | **12** | `Ticket_ID` | `Booking_ID`, `Seat_ID` | INT, VARCHAR, DECIMAL, BIT, DATETIME |
+| **8** | `Employee` | Primary Entity | **12** | `Employee_ID` | None | INT, VARCHAR, DECIMAL, DATE, FLOAT |
+| **9** | `Tuck_Shop` | Primary Entity | **12** | `Item_ID` | None | INT, VARCHAR, DECIMAL, DATE, BIT |
+| **10** | `Concession_Order` | Primary Entity | **12** | `Order_ID` | `Customer_ID`, `Employee_ID` | INT, DATETIME, DECIMAL, VARCHAR |
+| **10.1** | `Concession_Item_Order` | Associative Entity | **10** | `(Order_ID, Item_ID)` | `Order_ID`, `Item_ID` | INT, DECIMAL, VARCHAR, DATETIME |
+| **11** | `Parking` | Primary Entity | **12** | `Parking_ID` | `Customer_ID` | INT, VARCHAR, DATETIME, FLOAT, DECIMAL |
+| **12** | `Security_Checkpoint` | Primary Entity | **12** | `Checkpoint_ID` | `Guard_ID`, `Customer_ID`, `Ticket_ID` | INT, VARCHAR, DATETIME, BIT |
+| **13** | `Movie_Review` | Primary Entity | **12** | `Review_ID` | `Customer_ID`, `Movie_ID` | INT, VARCHAR, DATE, BIT |
 
 ---
 
@@ -104,12 +106,25 @@ graph TD
 
 Modern cinema auditoriums require physical and service specialization:
 
-* **Superclass:** `Screen`
-* **Subclasses:** `IMAXScreen`, `GoldScreen`, `PremiumScreen`, `SilverScreen`
+* **Superclass:** `Screen` (12 attributes)
+* **Subclasses (Strictly 10 specialized attributes each):**
+  * `IMAXScreen`: Laser projection, 1.43:1 aspect ratio, dual 3D, curvature, 12 audio channels, 1000+ nits luminance, HFR, commercial license.
+  * `GoldScreen`: Luxury dining lounge, recliners, butler service, snack tiers, call buttons, 45W USB chargers, 160° legrest, blankets, lounge access codes.
+  * `PremiumScreen`: Presidential luxury, private balcony seats, wine bar, VIP restrooms, heated seats, acoustic damping rating A, concierge desk, 65 dB isolation.
+  * `SilverScreen`: Economical student discounts (20%), combo bundle eligibility, group passes, refill options, ramp access, 25 booster seats, matinee rates.
 * **Structural Constraints:**
   * **Disjoint Constraint (`d`):** A screen hall can belong to at most ONE subclass.
   * **Total Participation (`=`):** Every screen hall in the multiplex MUST belong to one of the four subtypes.
 * **Relational Mapping:** Mapped via **Option 8.1.A** (separate relations with shared PK as FK and cascading referential integrity).
+
+---
+
+## 📊 SQL Query Execution Evidence Report (62 Queries + Proofs)
+
+A dedicated Markdown and Word verification suite documents the execution of every query with returned rows, execution status, and column data:
+* **[SQL_Query_Execution_Evidence.md](SQL_Query_Execution_Evidence.md):** 1,200+ lines of markdown execution evidence for all 30 WHERE queries, 12 Joins, and 20 Subqueries.
+* **`6_SQL_Queries_and_Execution_Evidence.docx`:** Formatted Microsoft Word deliverable containing all SQL statements and tabular query outputs.
+* **`Handwritten_Submission_Worksheet_A4_Printable.docx` & SVGs:** Ready-to-print or trace handwritten submission templates.
 
 ---
 
@@ -207,6 +222,7 @@ Cinema-Management-System-FullStack/
 ├── Cinema_Management_System_Final_Complete.sql  # Master T-SQL Script (DDL, DML, Joins, Subqueries)
 ├── DB Project File #2.sql                      # Primary Academic SQL File
 ├── database_query_results.json                 # JSON Verification Log of all 62 Query Outputs
+├── SQL_Query_Execution_Evidence.md             # Complete Markdown Execution Evidence (62 Queries)
 ├── Topic_Selection_and_Group_Formation.xlsx    # Phase 1 & 2 Excel Deliverables
 │
 ├── Cinema_Management_System_Complete_Report.docx # Comprehensive All-Phase Master Report
@@ -215,13 +231,17 @@ Cinema-Management-System-FullStack/
 ├── 3_Project_Scenario.docx                     # Phase 3: Detailed Multiplex Scenario
 ├── 4_Database_Design_ERD_EER_and_Relational_Mapping.docx # Phases 4-6 Deliverable
 ├── 5_Database_Normalization_BCNF.docx          # Phase 9: Step-by-Step BCNF Normalization
+├── 6_SQL_Queries_and_Execution_Evidence.docx   # Complete Word Execution Evidence Deliverable
+├── Handwritten_Submission_Worksheet_A4_Printable.docx # A4 Printable Worksheet for Students
 │
 ├── ERD_Diagram.svg                             # High-Resolution Scalable ERD Vector Diagram
 ├── EER_Diagram.svg                             # High-Resolution Scalable EER Vector Diagram
+├── Handwritten_EER_Diagram_Template.svg        # Authentic Blueprint Graph Paper EER Template
+├── Handwritten_BCNF_Normalization_Sheet.svg    # Authentic Blueprint Graph Paper Normalization Sheet
 ├── Handwritten_EER_and_Normalization_Worksheet.md # Complete Handwritten Template & Guide
 │
 ├── app.py                                      # Flask REST API Backend (Raw SQL)
-├── cinema_embedded.db                          # Embedded SQLite Demonstration Database
+├── cinema_embedded.db                          # Embedded SQLite Demonstration Database (19 Tables)
 ├── package.json                                # Node dependencies
 ├── vite.config.js                              # Vite build configuration
 ├── tailwind.config.js                          # Tailwind styling

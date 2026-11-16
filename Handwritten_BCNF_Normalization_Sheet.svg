@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1700" width="100%" height="100%" style="background-color: #F8FAFC; font-family: 'Segoe Print', 'Ink Free', 'Comic Sans MS', cursive, sans-serif;">
+  <defs>
+    <pattern id="bcnfGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#E2E8F0" stroke-width="0.8"/>
+    </pattern>
+    <pattern id="bcnfMajor" width="100" height="100" patternUnits="userSpaceOnUse">
+      <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#CBD5E1" stroke-width="1.2"/>
+    </pattern>
+    <filter id="boxDrop" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background Grid -->
+  <rect width="100%" height="100%" fill="#F8FAFC"/>
+  <rect width="100%" height="100%" fill="url(#bcnfGrid)"/>
+  <rect width="100%" height="100%" fill="url(#bcnfMajor)"/>
+
+  <!-- Page Border -->
+  <rect x="40" y="40" width="1120" height="1620" fill="none" stroke="#0F766E" stroke-width="2.5" rx="4"/>
+  <rect x="46" y="46" width="1108" height="1608" fill="none" stroke="#0F766E" stroke-width="1" rx="2"/>
+
+  <!-- University Header -->
+  <g transform="translate(60, 60)">
+    <rect width="1080" height="120" fill="#F0FDFA" stroke="#0F766E" stroke-width="2" rx="4"/>
+    <line x1="0" y1="42" x2="1080" y2="42" stroke="#0F766E" stroke-width="1.5"/>
+    <line x1="720" y1="0" x2="720" y2="120" stroke="#0F766E" stroke-width="1.5"/>
+    
+    <text x="20" y="28" font-size="17" font-weight="bold" fill="#0F766E">DEPARTMENT OF COMPUTER SCIENCE — THE UNIVERSITY OF LAHORE</text>
+    <text x="20" y="68" font-size="14" font-weight="bold" fill="#0F172A">CS-311 Database Systems | COMPONENT #15: Normalization from 1NF to BCNF</text>
+    <text x="20" y="100" font-size="13" fill="#1E293B">INSTRUCTOR: <tspan font-weight="bold" fill="#0F766E">Miss Duaa-e-Nadeem</tspan> | Topic: Cinema Management System</text>
+    
+    <text x="735" y="28" font-size="13" font-weight="bold" fill="#0F766E">SUBMISSION DETAILS:</text>
+    <text x="735" y="55" font-size="13" fill="#0F172A">Student: <tspan font-weight="bold">Talha Sarfraz</tspan> &amp; Group</text>
+    <text x="735" y="80" font-size="13" fill="#0F172A">SAP ID: <tspan font-weight="bold">70150006</tspan> | Semester: Fall 2024</text>
+    <text x="735" y="105" font-size="13" fill="#0F172A">Date: <tspan font-weight="bold">December 2024</tspan></text>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="220" font-size="22" font-weight="bold" fill="#0F766E" text-anchor="middle" text-decoration="underline">DATABASE NORMALIZATION WORKSHEET: UNF &#8594; 1NF &#8594; 2NF &#8594; 3NF &#8594; BCNF</text>
+
+  <!-- Step 0: Unnormalized Form (UNF) -->
+  <g transform="translate(60, 245)" filter="url(#boxDrop)">
+    <rect width="1080" height="150" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
+    <rect width="1080" height="32" fill="#CCFBF1" stroke="#0F766E" stroke-width="1.2" rx="4"/>
+    <text x="20" y="22" font-size="14" font-weight="bold" fill="#115E59">STEP 0: UNNORMALIZED FORM (UNF) — Universal Relation with Repeating Groups</text>
+    
+    <g transform="translate(20, 55)" font-size="12" fill="#0F172A">
+      <text x="0" y="0"><tspan font-weight="bold">Universal Schema:</tspan> R_UNF ( Booking_ID, Booking_Date, Customer_ID, Customer_Name, Customer_Email, Customer_City, { Phone_Numbers },</text>
+      <text x="0" y="22">Show_ID, Show_Date, Start_Time, Base_Price, Movie_ID, Movie_Title, Genre, Director, Screen_ID, Screen_Name, Screen_Type,</text>
+      <text x="0" y="44">{ <tspan font-weight="bold" fill="#B91C1C">Seat_Number, Seat_Class, Ticket_Price, Barcode_Number</tspan> }, { <tspan font-weight="bold" fill="#B91C1C">Item_ID, Item_Name, Quantity, Unit_Price</tspan> }, Total_Paid )</text>
+      
+      <rect x="0" y="60" width="1040" height="26" fill="#FEE2E2" rx="3"/>
+      <text x="10" y="78" font-size="11.5" fill="#991B1B">&#9888; Anomaly: Repeating groups in Seats/Tickets and Concession Items violate relation atomicity. Severe redundancy.</text>
+    </g>
+  </g>
+
+  <!-- Step 1: First Normal Form (1NF) -->
+  <g transform="translate(60, 420)" filter="url(#boxDrop)">
+    <rect width="1080" height="160" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
+    <rect width="1080" height="32" fill="#CCFBF1" stroke="#0F766E" stroke-width="1.2" rx="4"/>
+    <text x="20" y="22" font-size="14" font-weight="bold" fill="#115E59">STEP 1: FIRST NORMAL FORM (1NF) — Elimination of Repeating Groups &amp; Multivalued Attributes</text>
+    
+    <g transform="translate(20, 55)" font-size="12" fill="#0F172A">
+      <text x="0" y="0"><tspan font-weight="bold">Action:</tspan> Flatten repeating groups into individual tuples. Multivalued phone numbers extracted into separate relation.</text>
+      <text x="0" y="24"><tspan font-weight="bold">Composite Primary Key Defined:</tspan> ( <tspan text-decoration="underline" font-weight="bold" fill="#0F766E">Booking_ID</tspan>, <tspan text-decoration="underline" font-weight="bold" fill="#0F766E">Seat_ID</tspan>, <tspan text-decoration="underline" font-weight="bold" fill="#0F766E">Item_ID</tspan> )</text>
+      <text x="0" y="48">Atomic Relation: R_1NF ( <tspan text-decoration="underline">Booking_ID</tspan>, <tspan text-decoration="underline">Seat_ID</tspan>, <tspan text-decoration="underline">Item_ID</tspan>, Customer_ID, Cust_Name, Cust_Email, Show_ID, Show_Date,</text>
+      <text x="0" y="70">Movie_ID, Movie_Title, Screen_ID, Screen_Name, Ticket_Number, Barcode_No, Item_Qty, Unit_Price, Net_Payable )</text>
+      
+      <rect x="0" y="80" width="1040" height="24" fill="#FEF3C7" rx="3"/>
+      <text x="10" y="96" font-size="11" fill="#92400E">&#9888; 1NF Condition Satisfied: All column values are atomic. However, Partial Functional Dependencies exist on PK subsets.</text>
+    </g>
+  </g>
+
+  <!-- Step 2: Second Normal Form (2NF) -->
+  <g transform="translate(60, 605)" filter="url(#boxDrop)">
+    <rect width="1080" height="230" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
+    <rect width="1080" height="32" fill="#CCFBF1" stroke="#0F766E" stroke-width="1.2" rx="4"/>
+    <text x="20" y="22" font-size="14" font-weight="bold" fill="#115E59">STEP 2: SECOND NORMAL FORM (2NF) — Elimination of Partial Functional Dependencies</text>
+    
+    <g transform="translate(20, 55)" font-size="12" fill="#0F172A">
+      <text x="0" y="0" font-weight="bold" fill="#B91C1C">Identified Partial Dependencies on Composite Key (Booking_ID, Seat_ID, Item_ID):</text>
+      <text x="20" y="22">&#8226; <tspan font-weight="bold">FD 1 (Partial):</tspan> Booking_ID &#8594; Customer_ID, Show_ID, Booking_Timestamp, Net_Payable</text>
+      <text x="20" y="42">&#8226; <tspan font-weight="bold">FD 2 (Partial):</tspan> Seat_ID &#8594; Screen_ID, Row_Letter, Seat_Number, Seat_Class, Price_Multiplier</text>
+      <text x="20" y="62">&#8226; <tspan font-weight="bold">FD 3 (Partial):</tspan> Item_ID &#8594; Item_Name, Category, Unit_Price, Stock_Quantity</text>
+      <text x="20" y="82">&#8226; <tspan font-weight="bold">FD 4 (Full):</tspan> (Booking_ID, Seat_ID) &#8594; Ticket_Number, Barcode_Number, Final_Price</text>
+      <text x="20" y="102">&#8226; <tspan font-weight="bold">FD 5 (Full):</tspan> (Order_ID, Item_ID) &#8594; Quantity, Unit_Price_Charged, Subtotal</text>
+      
+      <text x="0" y="128" font-weight="bold" fill="#0F766E">Decomposed 2NF Relations:</text>
+      <text x="20" y="148">1. <tspan font-weight="bold">Booking</tspan> ( <tspan text-decoration="underline">Booking_ID</tspan>, Customer_ID, Show_ID, Booking_Timestamp, Net_Payable )</text>
+      <text x="20" y="168">2. <tspan font-weight="bold">Ticket</tspan> ( <tspan text-decoration="underline">Ticket_ID</tspan>, Booking_ID, Seat_ID, Ticket_Number, Barcode_Number, Final_Price )</text>
+      <text x="540" y="148">3. <tspan font-weight="bold">Seat</tspan> ( <tspan text-decoration="underline">Seat_ID</tspan>, Screen_ID, Seat_Code, Seat_Class )</text>
+      <text x="540" y="168">4. <tspan font-weight="bold">Tuck_Shop</tspan> ( <tspan text-decoration="underline">Item_ID</tspan>, Item_Name, Unit_Price )</text>
+    </g>
+  </g>
+
+  <!-- Step 3: Third Normal Form (3NF) -->
+  <g transform="translate(60, 860)" filter="url(#boxDrop)">
+    <rect width="1080" height="240" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
+    <rect width="1080" height="32" fill="#CCFBF1" stroke="#0F766E" stroke-width="1.2" rx="4"/>
+    <text x="20" y="22" font-size="14" font-weight="bold" fill="#115E59">STEP 3: THIRD NORMAL FORM (3NF) — Elimination of Transitive Functional Dependencies (X &#8594; Y, Y &#8594; Z)</text>
+    
+    <g transform="translate(20, 55)" font-size="12" fill="#0F172A">
+      <text x="0" y="0" font-weight="bold" fill="#B91C1C">Identified Transitive Functional Dependencies:</text>
+      <text x="20" y="22">&#8226; In Booking relation: Booking_ID &#8594; Customer_ID AND Customer_ID &#8594; { First_Name, Last_Name, Email, City }</text>
+      <text x="40" y="42" font-style="italic" fill="#64748B">&#8618; Transitive Dependency: Booking_ID &#8594; Customer Demographics (Violates 3NF)</text>
+      <text x="20" y="64">&#8226; In Booking relation: Booking_ID &#8594; Show_ID AND Show_ID &#8594; { Movie_ID, Screen_ID, Start_Time, Base_Price }</text>
+      <text x="40" y="84" font-style="italic" fill="#64748B">&#8618; Transitive Dependency: Booking_ID &#8594; Show Scheduling Details (Violates 3NF)</text>
+      <text x="20" y="106">&#8226; In Showtime relation: Show_ID &#8594; Movie_ID AND Movie_ID &#8594; { Title, Genre, Duration_Minutes, Director }</text>
+      <text x="40" y="126" font-style="italic" fill="#64748B">&#8618; Transitive Dependency: Show_ID &#8594; Movie Metadata (Violates 3NF)</text>
+      
+      <text x="0" y="152" font-weight="bold" fill="#0F766E">Action: Non-key determinants extracted into independent relations Customer, Showtime, Movie, Screen.</text>
+      <text x="20" y="172">&#10003; Every non-prime attribute is now directly dependent upon the Primary Key, the whole Primary Key, and nothing but the Primary Key!</text>
+    </g>
+  </g>
+
+  <!-- Step 4: Boyce-Codd Normal Form (BCNF) -->
+  <g transform="translate(60, 1125)" filter="url(#boxDrop)">
+    <rect width="1080" height="240" fill="#FFFFFF" stroke="#0F766E" stroke-width="2" rx="4"/>
+    <rect width="1080" height="32" fill="#CCFBF1" stroke="#0F766E" stroke-width="1.2" rx="4"/>
+    <text x="20" y="22" font-size="14" font-weight="bold" fill="#115E59">STEP 4: BOYCE-CODD NORMAL FORM (BCNF) — Strict Determinant Constraint Enforcement</text>
+    
+    <g transform="translate(20, 55)" font-size="12" fill="#0F172A">
+      <text x="0" y="0"><tspan font-weight="bold">BCNF Definition:</tspan> A relation R is in BCNF if and only if for every non-trivial functional dependency X &#8594; Y, <tspan font-weight="bold" fill="#0F766E">X is a Superkey</tspan>.</text>
+      
+      <text x="0" y="26" font-weight="bold" fill="#115E59">Verification of Candidate Keys &amp; Alternate Determinants:</text>
+      <text x="20" y="48">&#8226; In <tspan font-weight="bold">Customer</tspan>: Customer_ID (PK) is a superkey. Also Email is UNIQUE &#8594; Email is a candidate key. Both determinants are superkeys!</text>
+      <text x="20" y="70">&#8226; In <tspan font-weight="bold">Ticket</tspan>: Ticket_ID (PK) is a superkey. Also Ticket_Number and Barcode_Number are UNIQUE candidate keys. Satisfies BCNF!</text>
+      <text x="20" y="92">&#8226; In <tspan font-weight="bold">Employee</tspan>: Employee_ID (PK) is superkey. Also CNIC (National ID) is UNIQUE candidate key. Satisfies BCNF!</text>
+      <text x="20" y="114">&#8226; In <tspan font-weight="bold">Parking</tspan>: Parking_ID (PK) is superkey. License_Plate is monitored per slot. Satisfies BCNF!</text>
+      <text x="20" y="136">&#8226; In <tspan font-weight="bold">Screen Subclasses</tspan>: Screen_ID (PK) and Commercial_License_Code / Lounge_Access_Code are superkeys. Satisfies BCNF!</text>
+
+      <rect x="0" y="150" width="1040" height="26" fill="#DCFCE7" rx="3"/>
+      <text x="10" y="168" font-size="11.5" font-weight="bold" fill="#15803D">&#10004; BCNF VERDICT: Zero anomalies remain. All determinants are genuine superkeys. Lossless join &amp; dependency preservation hold!</text>
+    </g>
+  </g>
+
+  <!-- Final Relational Schema Summary -->
+  <g transform="translate(60, 1390)" filter="url(#boxDrop)">
+    <rect width="1080" height="240" fill="#F8FAFC" stroke="#0F766E" stroke-width="1.5" rx="4"/>
+    <text x="20" y="28" font-size="14" font-weight="bold" fill="#0F766E">FINAL NORMALIZED RELATIONAL SCHEMA (19 Tables in BCNF — Strictly >= 10 Attributes Each):</text>
+    
+    <g transform="translate(20, 52)" font-size="11" fill="#0F172A">
+      <text x="0" y="0">1. Customer ( <tspan text-decoration="underline" font-weight="bold">Customer_ID</tspan>, First_Name, Last_Name, Email [UQ], Gender, DOB, Membership, Reg_Date, Loyalty_Pts, City, Postal, Is_Active )</text>
+      <text x="0" y="18">2. Phone_Number ( <tspan text-decoration="underline" font-weight="bold">Phone_Num</tspan>, <tspan text-decoration="underline" font-weight="bold">Customer_ID</tspan>, Phone_Type, Country_Code, Telecom_Carrier, Is_Primary, WhatsApp, Verif_Status, SMS_OptIn, Added_Date )</text>
+      <text x="0" y="36">3. Movie ( <tspan text-decoration="underline" font-weight="bold">Movie_ID</tspan>, Title, Genre, Duration, Release_Date, Language, Director, Age_Rating, IMDb_Rating, Budget, Box_Office, Status )</text>
+      <text x="0" y="54">4. Screen ( <tspan text-decoration="underline" font-weight="bold">Screen_ID</tspan>, Screen_Name [UQ], Screen_Type, Total_Capacity, Row_Count, Seats_Per_Row, Sound_System, Projector, Width, Height, Clean_Status, Is_Active )</text>
+      <text x="0" y="72">5. IMAXScreen ( <tspan text-decoration="underline" font-weight="bold">Screen_ID</tspan>, Laser_Proj, Aspect_Ratio, Dual_3D, Curved_Angle, Channels, Max_Luminance, HFR, Calib_Days, License_Code [UQ] )</text>
+      <text x="0" y="90">6. GoldScreen ( <tspan text-decoration="underline" font-weight="bold">Screen_ID</tspan>, Lounge_Service, Recliner, Butler, Snack_Tier, Call_Button, USB_Watts, Legrest_Max, Pillow_Blanket, Lounge_Code [UQ] )</text>
+      <text x="0" y="108">7. PremiumScreen ( <tspan text-decoration="underline" font-weight="bold">Screen_ID</tspan>, Luxury_Level, Balcony_Seats, Wine_Bar, VIP_Restroom, Heated_Seats, Acoustic_Rating, Coat_Check, Concierge, Noise_Db )</text>
+      <text x="0" y="126">8. SilverScreen ( <tspan text-decoration="underline" font-weight="bold">Screen_ID</tspan>, Discount_Tier, Economy_Bundle, Student_Pass, Group_Discount, Free_Refill, Aisle_Ramp, Booster_Seats, Bulk_Ticket, Matinee_Rate )</text>
+      <text x="0" y="144">9. Showtime ( <tspan text-decoration="underline" font-weight="bold">Show_ID</tspan>, Movie_ID, Screen_ID, Show_Date, Start_Time, End_Time, Base_Price, Show_Format, Available_Seats, Audio, Subtitle, Status )</text>
+      <text x="0" y="162">10. Seat ( <tspan text-decoration="underline" font-weight="bold">Seat_ID</tspan>, Screen_ID, Row_Letter, Seat_Number, Seat_Code, Seat_Class, Price_Multiplier, Wheelchair, Reserved, Maintenance, Vibration, Color )</text>
+      <text x="0" y="180">11. Booking ( <tspan text-decoration="underline" font-weight="bold">Booking_ID</tspan>, Customer_ID, Show_ID, Booking_Timestamp, Total_Seats, Total_Amount, Discount, Tax, Net_Payable, Status, Pay_Status, Channel )</text>
+      <text x="0" y="198">12. Ticket, 13. Employee, 14. Tuck_Shop, 15. Concession_Order, 16. Concession_Item_Order, 17. Parking, 18. Checkpoint, 19. Movie_Review</text>
+    </g>
+  </g>
+</svg>

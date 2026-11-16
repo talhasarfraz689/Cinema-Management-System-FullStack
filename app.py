@@ -53,7 +53,10 @@ def init_embedded_db():
             );
             CREATE TABLE Phone_Number (
                 Phone_Num TEXT NOT NULL, Customer_ID INTEGER NOT NULL, Phone_Type TEXT NOT NULL DEFAULT 'Mobile',
-                Is_Primary INTEGER NOT NULL DEFAULT 1, Added_Date TEXT NOT NULL,
+                Country_Code TEXT NOT NULL DEFAULT '+92', Telecom_Carrier TEXT NOT NULL DEFAULT 'Jazz',
+                Is_Primary INTEGER NOT NULL DEFAULT 1, Is_WhatsApp_Enabled INTEGER NOT NULL DEFAULT 1,
+                Verification_Status TEXT NOT NULL DEFAULT 'Verified', SMS_Promo_OptIn INTEGER NOT NULL DEFAULT 1,
+                Added_Date TEXT NOT NULL,
                 PRIMARY KEY (Phone_Num, Customer_ID)
             );
             CREATE TABLE Movie (
@@ -71,19 +74,27 @@ def init_embedded_db():
             );
             CREATE TABLE IMAXScreen (
                 Screen_ID INTEGER PRIMARY KEY, Laser_Projection_Type TEXT NOT NULL, Aspect_Ratio TEXT NOT NULL,
-                Dual_Laser_3D INTEGER NOT NULL, Curved_Angle_Degrees REAL NOT NULL, Commercial_License_Code TEXT NOT NULL UNIQUE
+                Dual_Laser_3D INTEGER NOT NULL, Curved_Angle_Degrees REAL NOT NULL, Audio_Channel_Count INTEGER NOT NULL,
+                Max_Screen_Luminance_Nits INTEGER NOT NULL, HFR_Supported INTEGER NOT NULL,
+                Calibration_Frequency_Days INTEGER NOT NULL, Commercial_License_Code TEXT NOT NULL UNIQUE
             );
             CREATE TABLE GoldScreen (
                 Screen_ID INTEGER PRIMARY KEY, Lounge_Service_Type TEXT NOT NULL, Recliner_Model TEXT NOT NULL,
-                Butler_Service_Enabled INTEGER NOT NULL, Complimentary_Snack_Tier TEXT NOT NULL, Call_Button_Active INTEGER NOT NULL
+                Butler_Service_Enabled INTEGER NOT NULL, Complimentary_Snack_Tier TEXT NOT NULL, Call_Button_Active INTEGER NOT NULL,
+                USB_Charging_Speed_Watts INTEGER NOT NULL, Legrest_Angle_Max INTEGER NOT NULL,
+                Pillow_Blanket_Provided INTEGER NOT NULL, Lounge_Access_Code TEXT NOT NULL UNIQUE
             );
             CREATE TABLE PremiumScreen (
                 Screen_ID INTEGER PRIMARY KEY, Luxury_Level TEXT NOT NULL, Private_Balcony_Seats INTEGER NOT NULL,
-                Wine_Bar_Access INTEGER NOT NULL, VIP_Restroom_Access INTEGER NOT NULL, Heated_Seats INTEGER NOT NULL
+                Wine_Bar_Access INTEGER NOT NULL, VIP_Restroom_Access INTEGER NOT NULL, Heated_Seats INTEGER NOT NULL,
+                Acoustic_Damping_Rating TEXT NOT NULL, Coat_Check_Available INTEGER NOT NULL,
+                Concierge_Desk_Station TEXT NOT NULL, Noise_Isolation_Db INTEGER NOT NULL
             );
             CREATE TABLE SilverScreen (
                 Screen_ID INTEGER PRIMARY KEY, Discount_Tier_Percent INTEGER NOT NULL, Economy_Bundle_Eligible INTEGER NOT NULL,
-                Student_Pass_Accepted INTEGER NOT NULL, Group_Discount_Active INTEGER NOT NULL, Free_Refill_Eligible INTEGER NOT NULL
+                Student_Pass_Accepted INTEGER NOT NULL, Group_Discount_Active INTEGER NOT NULL, Free_Refill_Eligible INTEGER NOT NULL,
+                Aisle_Ramp_Access INTEGER NOT NULL, Booster_Seat_Quantity INTEGER NOT NULL,
+                Bulk_Ticket_Eligible INTEGER NOT NULL, Matinee_Discount_Rate REAL NOT NULL
             );
             CREATE TABLE Showtime (
                 Show_ID INTEGER PRIMARY KEY, Movie_ID INTEGER NOT NULL, Screen_ID INTEGER NOT NULL,
@@ -129,7 +140,9 @@ def init_embedded_db():
             );
             CREATE TABLE Concession_Item_Order (
                 Order_ID INTEGER NOT NULL, Item_ID INTEGER NOT NULL, Quantity INTEGER NOT NULL,
-                Unit_Price_Charged REAL NOT NULL, Subtotal REAL NOT NULL, Notes TEXT,
+                Unit_Price_Charged REAL NOT NULL, Discount_Applied REAL NOT NULL, Tax_Amount REAL NOT NULL,
+                Subtotal REAL NOT NULL, Preparation_Status TEXT NOT NULL, Special_Instructions TEXT NOT NULL,
+                Dispensed_Timestamp TEXT NOT NULL,
                 PRIMARY KEY (Order_ID, Item_ID)
             );
             CREATE TABLE Parking (

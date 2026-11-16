@@ -1,0 +1,215 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" width="100%" height="100%" style="background-color: #F8FAFC; font-family: 'Segoe Print', 'Ink Free', 'Comic Sans MS', cursive, sans-serif;">
+  <defs>
+    <!-- Graph paper grid pattern (5mm equivalent) -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#E2E8F0" stroke-width="0.8"/>
+    </pattern>
+    <pattern id="majorGrid" width="100" height="100" patternUnits="userSpaceOnUse">
+      <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#CBD5E1" stroke-width="1.2"/>
+    </pattern>
+    <filter id="handShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background Grid -->
+  <rect width="100%" height="100%" fill="#F8FAFC"/>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+  <rect width="100%" height="100%" fill="url(#majorGrid)"/>
+
+  <!-- Page Border -->
+  <rect x="40" y="40" width="1120" height="1520" fill="none" stroke="#1E3A8A" stroke-width="2.5" rx="4"/>
+  <rect x="46" y="46" width="1108" height="1508" fill="none" stroke="#1E3A8A" stroke-width="1" rx="2"/>
+
+  <!-- Official University Submission Header Block -->
+  <g transform="translate(60, 60)">
+    <rect width="1080" height="130" fill="#EFF6FF" stroke="#1E3A8A" stroke-width="2" rx="4"/>
+    <line x1="0" y1="45" x2="1080" y2="45" stroke="#1E3A8A" stroke-width="1.5"/>
+    <line x1="720" y1="0" x2="720" y2="130" stroke="#1E3A8A" stroke-width="1.5"/>
+    <line x1="0" y1="88" x2="720" y2="88" stroke="#1E3A8A" stroke-width="1"/>
+
+    <!-- Left Box Info -->
+    <text x="20" y="30" font-size="18" font-weight="bold" fill="#1E3A8A">DEPARTMENT OF COMPUTER SCIENCE — THE UNIVERSITY OF LAHORE</text>
+    <text x="20" y="70" font-size="14" font-weight="bold" fill="#0F172A">COURSE: CS-311 Database Systems | TERM PROJECT SUBMISSION</text>
+    <text x="20" y="112" font-size="13" fill="#1E293B">INSTRUCTOR: <tspan font-weight="bold" fill="#1E3A8A">Miss Duaa-e-Nadeem</tspan> | COMPONENT #8: Enhanced ER (EER) Diagram</text>
+
+    <!-- Right Box Submission Meta -->
+    <text x="735" y="30" font-size="13" font-weight="bold" fill="#1E3A8A">STUDENT CREDENTIALS:</text>
+    <text x="735" y="58" font-size="13" fill="#0F172A">Name: <tspan font-weight="bold">Talha Sarfraz</tspan> (Group Lead)</text>
+    <text x="735" y="84" font-size="13" fill="#0F172A">SAP ID: <tspan font-weight="bold">70150006</tspan> | BSCS Section: 5th-A</text>
+    <text x="735" y="112" font-size="13" fill="#0F172A">Date: <tspan font-weight="bold">December 2024</tspan> | Status: Verified Final</text>
+  </g>
+
+  <!-- Title of Worksheet -->
+  <text x="600" y="235" font-size="22" font-weight="bold" fill="#1E3A8A" text-anchor="middle" text-decoration="underline">HANDWRITTEN EER DIAGRAM: AUDITORIUM SPECIALIZATION HIERARCHY</text>
+  <text x="600" y="260" font-size="13" fill="#475569" text-anchor="middle">(Structural Disjoint &amp; Total Specialization with 10+ Relational Attributes per Relation)</text>
+
+  <!-- Superclass: SCREEN -->
+  <g transform="translate(380, 290)" filter="url(#handShadow)">
+    <rect width="440" height="300" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2.5" rx="6"/>
+    <rect width="440" height="42" fill="#DBEAFE" stroke="#1E3A8A" stroke-width="1.5" rx="6"/>
+    <text x="220" y="28" font-size="18" font-weight="bold" fill="#1E3A8A" text-anchor="middle">SCREEN (Superclass)</text>
+    <line x1="0" y1="42" x2="440" y2="42" stroke="#1E3A8A" stroke-width="2"/>
+
+    <g transform="translate(25, 70)" font-size="13" fill="#0F172A">
+      <text x="0" y="0" font-weight="bold" text-decoration="underline" fill="#1E3A8A">&#8226; Screen_ID (Primary Key)</text>
+      <text x="0" y="22">&#8226; Screen_Name (Candidate Key - UNIQUE)</text>
+      <text x="0" y="44">&#8226; Screen_Type (Specialization Discriminator)</text>
+      <text x="0" y="66">&#8226; Total_Capacity (INTEGER, CHECK &gt; 0)</text>
+      <text x="0" y="88">&#8226; Row_Count (INTEGER)</text>
+      <text x="0" y="110">&#8226; Seats_Per_Row (INTEGER)</text>
+      <text x="0" y="132">&#8226; Sound_System (VARCHAR - Dolby Atmos 7.1/12.2)</text>
+      <text x="0" y="154">&#8226; Projector_Model (VARCHAR - 4K RGB Laser)</text>
+      <text x="0" y="176">&#8226; Screen_Width_Feet (FLOAT)</text>
+      <text x="0" y="198">&#8226; Screen_Height_Feet (FLOAT)</text>
+      <text x="0" y="220">&#8226; Cleaning_Status (VARCHAR - Clean/In-Progress)</text>
+      <text x="0" y="242">&#8226; Is_Active (BIT - Boolean Flag)</text>
+    </g>
+  </g>
+
+  <!-- Total Participation Double Line -->
+  <line x1="597" y1="590" x2="597" y2="690" stroke="#1E3A8A" stroke-width="2.5"/>
+  <line x1="603" y1="590" x2="603" y2="690" stroke="#1E3A8A" stroke-width="2.5"/>
+  <text x="615" y="645" font-size="13" font-weight="bold" fill="#1E3A8A">Total Participation (=)</text>
+  <text x="615" y="662" font-size="11" fill="#475569">(Every screen must belong to a subtype)</text>
+
+  <!-- Disjoint Constraint Circle 'd' -->
+  <circle cx="600" cy="725" r="32" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="3" filter="url(#handShadow)"/>
+  <text x="600" y="736" font-size="28" font-weight="bold" fill="#1E3A8A" text-anchor="middle">d</text>
+  <text x="650" y="730" font-size="14" font-weight="bold" fill="#1E3A8A">Disjoint (d)</text>
+  <text x="650" y="748" font-size="11" fill="#475569">(A screen is exactly one subtype)</text>
+
+  <!-- Connector Lines with Arrows / Ticks to Subclasses -->
+  <path d="M 575 745 L 200 840" stroke="#1E3A8A" stroke-width="2.2" fill="none"/>
+  <path d="M 585 755 L 450 840" stroke="#1E3A8A" stroke-width="2.2" fill="none"/>
+  <path d="M 615 755 L 750 840" stroke="#1E3A8A" stroke-width="2.2" fill="none"/>
+  <path d="M 625 745 L 1000 840" stroke="#1E3A8A" stroke-width="2.2" fill="none"/>
+
+  <!-- Subclass 1: IMAXScreen (10 Attributes) -->
+  <g transform="translate(65, 840)" filter="url(#handShadow)">
+    <rect width="255" height="310" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2" rx="4"/>
+    <rect width="255" height="34" fill="#EDE9FE" stroke="#1E3A8A" stroke-width="1.2" rx="4"/>
+    <text x="127" y="23" font-size="14" font-weight="bold" fill="#5B21B6" text-anchor="middle">IMAXScreen (Subclass)</text>
+    <line x1="0" y1="34" x2="255" y2="34" stroke="#1E3A8A" stroke-width="1.5"/>
+
+    <g transform="translate(14, 55)" font-size="11.5" fill="#0F172A">
+      <text x="0" y="0" font-weight="bold" text-decoration="underline" fill="#1E3A8A">&#8226; Screen_ID (PK, FK)</text>
+      <text x="0" y="22">&#8226; Laser_Projection_Type</text>
+      <text x="0" y="44">&#8226; Aspect_Ratio ('1.43:1')</text>
+      <text x="0" y="66">&#8226; Dual_Laser_3D (BIT)</text>
+      <text x="0" y="88">&#8226; Curved_Angle_Degrees</text>
+      <text x="0" y="110">&#8226; Audio_Channel_Count (12)</text>
+      <text x="0" y="132">&#8226; Max_Screen_Luminance_Nits</text>
+      <text x="0" y="154">&#8226; HFR_Supported (BIT)</text>
+      <text x="0" y="176">&#8226; Calibration_Frequency_Days</text>
+      <text x="0" y="198">&#8226; Commercial_License_Code [UQ]</text>
+      
+      <rect x="-4" y="215" width="235" height="28" fill="#F3E8FF" stroke="#A855F7" stroke-width="0.8" rx="3"/>
+      <text x="6" y="234" font-size="10.5" fill="#6B21A8">Strictly 10 Attributes (+12 inherited)</text>
+    </g>
+  </g>
+
+  <!-- Subclass 2: GoldScreen (10 Attributes) -->
+  <g transform="translate(335, 840)" filter="url(#handShadow)">
+    <rect width="255" height="310" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2" rx="4"/>
+    <rect width="255" height="34" fill="#FEF3C7" stroke="#1E3A8A" stroke-width="1.2" rx="4"/>
+    <text x="127" y="23" font-size="14" font-weight="bold" fill="#92400E" text-anchor="middle">GoldScreen (Subclass)</text>
+    <line x1="0" y1="34" x2="255" y2="34" stroke="#1E3A8A" stroke-width="1.5"/>
+
+    <g transform="translate(14, 55)" font-size="11.5" fill="#0F172A">
+      <text x="0" y="0" font-weight="bold" text-decoration="underline" fill="#1E3A8A">&#8226; Screen_ID (PK, FK)</text>
+      <text x="0" y="22">&#8226; Lounge_Service_Type</text>
+      <text x="0" y="44">&#8226; Recliner_Model</text>
+      <text x="0" y="66">&#8226; Butler_Service_Enabled (BIT)</text>
+      <text x="0" y="88">&#8226; Complimentary_Snack_Tier</text>
+      <text x="0" y="110">&#8226; Call_Button_Active (BIT)</text>
+      <text x="0" y="132">&#8226; USB_Charging_Speed_Watts</text>
+      <text x="0" y="154">&#8226; Legrest_Angle_Max (160&#176;)</text>
+      <text x="0" y="176">&#8226; Pillow_Blanket_Provided (BIT)</text>
+      <text x="0" y="198">&#8226; Lounge_Access_Code [UQ]</text>
+      
+      <rect x="-4" y="215" width="235" height="28" fill="#FEF3C7" stroke="#F59E0B" stroke-width="0.8" rx="3"/>
+      <text x="6" y="234" font-size="10.5" fill="#92400E">Strictly 10 Attributes (+12 inherited)</text>
+    </g>
+  </g>
+
+  <!-- Subclass 3: PremiumScreen (10 Attributes) -->
+  <g transform="translate(605, 840)" filter="url(#handShadow)">
+    <rect width="255" height="310" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2" rx="4"/>
+    <rect width="255" height="34" fill="#FCE7F3" stroke="#1E3A8A" stroke-width="1.2" rx="4"/>
+    <text x="127" y="23" font-size="14" font-weight="bold" fill="#9D174D" text-anchor="middle">PremiumScreen (Subclass)</text>
+    <line x1="0" y1="34" x2="255" y2="34" stroke="#1E3A8A" stroke-width="1.5"/>
+
+    <g transform="translate(14, 55)" font-size="11.5" fill="#0F172A">
+      <text x="0" y="0" font-weight="bold" text-decoration="underline" fill="#1E3A8A">&#8226; Screen_ID (PK, FK)</text>
+      <text x="0" y="22">&#8226; Luxury_Level (VIP Presidential)</text>
+      <text x="0" y="44">&#8226; Private_Balcony_Seats (INT)</text>
+      <text x="0" y="66">&#8226; Wine_Bar_Access (BIT)</text>
+      <text x="0" y="88">&#8226; VIP_Restroom_Access (BIT)</text>
+      <text x="0" y="110">&#8226; Heated_Seats (BIT)</text>
+      <text x="0" y="132">&#8226; Acoustic_Damping_Rating</text>
+      <text x="0" y="154">&#8226; Coat_Check_Available (BIT)</text>
+      <text x="0" y="176">&#8226; Concierge_Desk_Station</text>
+      <text x="0" y="198">&#8226; Noise_Isolation_Db (65 dB)</text>
+      
+      <rect x="-4" y="215" width="235" height="28" fill="#FCE7F3" stroke="#EC4899" stroke-width="0.8" rx="3"/>
+      <text x="6" y="234" font-size="10.5" fill="#9D174D">Strictly 10 Attributes (+12 inherited)</text>
+    </g>
+  </g>
+
+  <!-- Subclass 4: SilverScreen (10 Attributes) -->
+  <g transform="translate(875, 840)" filter="url(#handShadow)">
+    <rect width="255" height="310" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="2" rx="4"/>
+    <rect width="255" height="34" fill="#F1F5F9" stroke="#1E3A8A" stroke-width="1.2" rx="4"/>
+    <text x="127" y="23" font-size="14" font-weight="bold" fill="#334155" text-anchor="middle">SilverScreen (Subclass)</text>
+    <line x1="0" y1="34" x2="255" y2="34" stroke="#1E3A8A" stroke-width="1.5"/>
+
+    <g transform="translate(14, 55)" font-size="11.5" fill="#0F172A">
+      <text x="0" y="0" font-weight="bold" text-decoration="underline" fill="#1E3A8A">&#8226; Screen_ID (PK, FK)</text>
+      <text x="0" y="22">&#8226; Discount_Tier_Percent (20%)</text>
+      <text x="0" y="44">&#8226; Economy_Bundle_Eligible (BIT)</text>
+      <text x="0" y="66">&#8226; Student_Pass_Accepted (BIT)</text>
+      <text x="0" y="88">&#8226; Group_Discount_Active (BIT)</text>
+      <text x="0" y="110">&#8226; Free_Refill_Eligible (BIT)</text>
+      <text x="0" y="132">&#8226; Aisle_Ramp_Access (BIT)</text>
+      <text x="0" y="154">&#8226; Booster_Seat_Quantity (INT)</text>
+      <text x="0" y="176">&#8226; Bulk_Ticket_Eligible (BIT)</text>
+      <text x="0" y="198">&#8226; Matinee_Discount_Rate (0.25)</text>
+      
+      <rect x="-4" y="215" width="235" height="28" fill="#F1F5F9" stroke="#64748B" stroke-width="0.8" rx="3"/>
+      <text x="6" y="234" font-size="10.5" fill="#334155">Strictly 10 Attributes (+12 inherited)</text>
+    </g>
+  </g>
+
+  <!-- Structural Mapping Box -->
+  <g transform="translate(65, 1180)">
+    <rect width="1065" height="230" fill="#EFF6FF" stroke="#1E3A8A" stroke-width="1.5" rx="6"/>
+    <text x="25" y="30" font-size="15" font-weight="bold" fill="#1E3A8A">MAPPING TO RELATIONAL MODEL (Option 8.1.A - Multiple Relations for Superclass &amp; Subclasses):</text>
+    
+    <g transform="translate(25, 60)" font-size="12" fill="#0F172A">
+      <text x="0" y="0"><tspan font-weight="bold">1. Screen</tspan> ( <tspan text-decoration="underline" font-weight="bold" fill="#1E3A8A">Screen_ID</tspan>, Screen_Name, Screen_Type, Total_Capacity, Row_Count, Seats_Per_Row, Sound_System, Projector_Model, Screen_Width_Feet, Screen_Height_Feet, Cleaning_Status, Is_Active )</text>
+      <text x="0" y="25"><tspan font-weight="bold">2. IMAXScreen</tspan> ( <tspan text-decoration="underline" font-weight="bold" fill="#1E3A8A">Screen_ID</tspan>, Laser_Projection_Type, Aspect_Ratio, Dual_Laser_3D, Curved_Angle_Degrees, Audio_Channel_Count, Max_Screen_Luminance_Nits, HFR_Supported, Calibration_Frequency_Days, Commercial_License_Code )</text>
+      <text x="0" y="50"><tspan font-weight="bold">3. GoldScreen</tspan> ( <tspan text-decoration="underline" font-weight="bold" fill="#1E3A8A">Screen_ID</tspan>, Lounge_Service_Type, Recliner_Model, Butler_Service_Enabled, Complimentary_Snack_Tier, Call_Button_Active, USB_Charging_Speed_Watts, Legrest_Angle_Max, Pillow_Blanket_Provided, Lounge_Access_Code )</text>
+      <text x="0" y="75"><tspan font-weight="bold">4. PremiumScreen</tspan> ( <tspan text-decoration="underline" font-weight="bold" fill="#1E3A8A">Screen_ID</tspan>, Luxury_Level, Private_Balcony_Seats, Wine_Bar_Access, VIP_Restroom_Access, Heated_Seats, Acoustic_Damping_Rating, Coat_Check_Available, Concierge_Desk_Station, Noise_Isolation_Db )</text>
+      <text x="0" y="100"><tspan font-weight="bold">5. SilverScreen</tspan> ( <tspan text-decoration="underline" font-weight="bold" fill="#1E3A8A">Screen_ID</tspan>, Discount_Tier_Percent, Economy_Bundle_Eligible, Student_Pass_Accepted, Group_Discount_Active, Free_Refill_Eligible, Aisle_Ramp_Access, Booster_Seat_Quantity, Bulk_Ticket_Eligible, Matinee_Discount_Rate )</text>
+      
+      <line x1="0" y1="120" x2="1015" y2="120" stroke="#93C5FD" stroke-width="1"/>
+      <text x="0" y="142" font-weight="bold" fill="#1E3A8A">Integrity Constraints:</text>
+      <text x="160" y="142">FK: <tspan font-style="italic">Screen_ID</tspan> in every subclass references <tspan font-style="italic">Screen(Screen_ID)</tspan> ON DELETE CASCADE ON UPDATE CASCADE.</text>
+    </g>
+  </g>
+
+  <!-- Bottom Verification Block -->
+  <g transform="translate(65, 1440)">
+    <rect width="1065" height="90" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1" rx="4"/>
+    <line x1="700" y1="0" x2="700" y2="90" stroke="#94A3B8" stroke-width="1"/>
+    
+    <text x="20" y="30" font-size="12" font-weight="bold" fill="#1E3A8A">EVALUATION CHECKLIST &amp; VERIFICATION STAMP:</text>
+    <text x="20" y="55" font-size="11" fill="#334155">&#9745; Superclass Entity with 12 attributes | &#9745; 4 Specialized Subclasses (IMAX, Gold, Premium, Silver)</text>
+    <text x="20" y="75" font-size="11" fill="#334155">&#9745; Strictly 10 attributes per subclass | &#9745; Total Specialization (=) &amp; Disjointness (d) constraint</text>
+    
+    <text x="720" y="30" font-size="12" font-weight="bold" fill="#1E3A8A">INSTRUCTOR SIGNATURE / EVALUATION:</text>
+    <text x="720" y="58" font-size="11" fill="#64748B">Date Checked: ____________________</text>
+    <text x="720" y="78" font-size="11" fill="#64748B">Marks Awarded: _____ / 20</text>
+  </g>
+</svg>
