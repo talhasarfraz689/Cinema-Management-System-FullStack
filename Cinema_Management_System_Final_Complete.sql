@@ -1129,41 +1129,41 @@ GO
 -- Data Ingestion: Concession_Item_Order (35 tuples)
 -- -------------------------------------------------------------------------
 INSERT INTO Concession_Item_Order (Order_ID, Item_ID, Quantity, Unit_Price_Charged, Subtotal, Notes) VALUES
-(1, 1, 1, 350.0, 350.0, 'Extra butter'),
-(2, 2, 1, 550.0, 550.0, 'Extra butter'),
-(3, 3, 2, 680.0, 1360.0, 'Extra butter'),
-(4, 4, 1, 180.0, 180.0, 'Cold drink'),
-(5, 5, 1, 190.0, 190.0, 'Cold drink'),
-(6, 6, 2, 180.0, 360.0, 'Cold drink'),
-(7, 7, 1, 180.0, 180.0, 'Cold drink'),
-(8, 8, 1, 90.0, 90.0, 'Cold drink'),
-(9, 9, 2, 480.0, 960.0, 'Standard order'),
-(10, 10, 1, 450.0, 450.0, 'Standard order'),
-(11, 11, 1, 720.0, 720.0, 'Standard order'),
-(12, 12, 2, 580.0, 1160.0, 'Standard order'),
-(13, 13, 1, 420.0, 420.0, 'Standard order'),
-(14, 14, 1, 320.0, 320.0, 'Standard order'),
-(15, 15, 2, 240.0, 480.0, 'Standard order'),
-(16, 16, 1, 280.0, 280.0, 'Standard order'),
-(17, 17, 1, 260.0, 260.0, 'Standard order'),
-(18, 18, 2, 250.0, 500.0, 'Standard order'),
-(19, 19, 1, 290.0, 290.0, 'Standard order'),
-(20, 20, 1, 180.0, 180.0, 'Standard order'),
-(21, 21, 2, 1250.0, 2500.0, 'Standard order'),
-(22, 22, 1, 2100.0, 2100.0, 'Standard order'),
-(23, 23, 1, 650.0, 650.0, 'Standard order'),
-(24, 24, 2, 580.0, 1160.0, 'Standard order'),
-(25, 25, 1, 380.0, 380.0, 'Standard order'),
-(26, 26, 1, 420.0, 420.0, 'Standard order'),
-(27, 27, 2, 260.0, 520.0, 'Standard order'),
-(28, 28, 1, 220.0, 220.0, 'Standard order'),
-(29, 29, 1, 490.0, 490.0, 'Standard order'),
-(30, 30, 2, 520.0, 1040.0, 'Standard order'),
-(31, 31, 1, 460.0, 460.0, 'Standard order'),
-(32, 32, 1, 280.0, 280.0, 'Standard order'),
-(33, 33, 2, 280.0, 560.0, 'Standard order'),
-(34, 34, 1, 390.0, 390.0, 'Standard order'),
-(35, 35, 1, 340.0, 340.0, 'Standard order');
+(1, 2, 1, 550.0, 550.0, 'Extra butter'),
+(2, 3, 1, 680.0, 680.0, 'Extra butter'),
+(3, 4, 2, 180.0, 360.0, 'Cold drink'),
+(4, 5, 1, 190.0, 190.0, 'Cold drink'),
+(5, 6, 1, 180.0, 180.0, 'Cold drink'),
+(6, 7, 2, 180.0, 360.0, 'Cold drink'),
+(7, 8, 1, 90.0, 90.0, 'Cold drink'),
+(8, 9, 1, 480.0, 480.0, 'Standard order'),
+(9, 10, 2, 450.0, 900.0, 'Standard order'),
+(10, 11, 1, 720.0, 720.0, 'Standard order'),
+(11, 12, 1, 580.0, 580.0, 'Standard order'),
+(12, 13, 2, 420.0, 840.0, 'Standard order'),
+(13, 14, 1, 320.0, 320.0, 'Standard order'),
+(14, 15, 1, 240.0, 240.0, 'Standard order'),
+(15, 16, 2, 280.0, 560.0, 'Standard order'),
+(16, 17, 1, 260.0, 260.0, 'Standard order'),
+(17, 18, 1, 250.0, 250.0, 'Standard order'),
+(18, 19, 2, 290.0, 580.0, 'Standard order'),
+(19, 20, 1, 180.0, 180.0, 'Standard order'),
+(20, 21, 1, 1250.0, 1250.0, 'Standard order'),
+(21, 22, 2, 2100.0, 4200.0, 'Standard order'),
+(22, 23, 1, 650.0, 650.0, 'Standard order'),
+(23, 24, 1, 580.0, 580.0, 'Standard order'),
+(24, 25, 2, 380.0, 760.0, 'Standard order'),
+(25, 26, 1, 420.0, 420.0, 'Standard order'),
+(26, 27, 1, 260.0, 260.0, 'Standard order'),
+(27, 28, 2, 220.0, 440.0, 'Standard order'),
+(28, 1, 1, 350.0, 350.0, 'Extra butter'),
+(29, 2, 1, 550.0, 550.0, 'Extra butter'),
+(30, 3, 2, 680.0, 1360.0, 'Extra butter'),
+(31, 4, 1, 180.0, 180.0, 'Cold drink'),
+(32, 5, 1, 190.0, 190.0, 'Cold drink'),
+(33, 6, 2, 180.0, 360.0, 'Cold drink'),
+(34, 7, 1, 180.0, 180.0, 'Cold drink'),
+(35, 8, 1, 90.0, 90.0, 'Cold drink');
 GO
 
 -- -------------------------------------------------------------------------
@@ -1381,24 +1381,24 @@ GO
 SELECT Movie_ID, Title, Genre, Duration_Minutes, IMDb_Rating FROM Movie WHERE NOT (Genre = 'Drama');
 GO
 
--- Query #11 [Operator: + (Arithmetic)]
--- Purpose: Calculate ticket gross cost with an added 100 PKR surcharge for tickets with base price exceeding 1400 PKR.
-SELECT Ticket_ID, Ticket_Number, Base_Price, (Base_Price + 100.00) AS Gross_Price_With_Surcharge FROM Ticket WHERE Base_Price > 1400.00;
+-- Query #11 [Operator: + (Arithmetic in WHERE)]
+-- Purpose: Calculate ticket gross cost with an added 100 PKR surcharge where the adjusted price exceeds 1500 PKR.
+SELECT Ticket_ID, Ticket_Number, Base_Price, (Base_Price + 100.00) AS Gross_Price_With_Surcharge FROM Ticket WHERE (Base_Price + 100.00) > 1500.00;
 GO
 
--- Query #12 [Operator: - (Arithmetic)]
--- Purpose: Display bookings where customer discount was applied, showing net difference before tax.
-SELECT Booking_ID, Total_Amount, Discount_Amount, (Total_Amount - Discount_Amount) AS Adjusted_Subtotal FROM Booking WHERE Discount_Amount > 0;
+-- Query #12 [Operator: - (Arithmetic in WHERE)]
+-- Purpose: Display bookings where adjusted subtotal (Total_Amount - Discount_Amount) strictly exceeds 2000 PKR.
+SELECT Booking_ID, Total_Amount, Discount_Amount, (Total_Amount - Discount_Amount) AS Adjusted_Subtotal FROM Booking WHERE (Total_Amount - Discount_Amount) > 2000.00;
 GO
 
--- Query #13 [Operator: * (Arithmetic)]
--- Purpose: Compute total inventory valuation (Stock_Quantity * Cost_Price) for tuck shop items having stock over 150 units.
-SELECT Item_ID, Item_Name, Stock_Quantity, Cost_Price, (Stock_Quantity * Cost_Price) AS Total_Stock_Valuation FROM Tuck_Shop WHERE Stock_Quantity > 150;
+-- Query #13 [Operator: * (Arithmetic in WHERE)]
+-- Purpose: Compute total inventory valuation (Stock_Quantity * Cost_Price) for items whose total stock valuation exceeds 30,000 PKR.
+SELECT Item_ID, Item_Name, Stock_Quantity, Cost_Price, (Stock_Quantity * Cost_Price) AS Total_Stock_Valuation FROM Tuck_Shop WHERE (Stock_Quantity * Cost_Price) > 30000.00;
 GO
 
--- Query #14 [Operator: / (Arithmetic)]
--- Purpose: Calculate the estimated hourly wage (Monthly_Salary / 160 hours) for technical and management staff earning over 70,000 PKR.
-SELECT Employee_ID, First_Name, Last_Name, Designation, Monthly_Salary, ROUND(Monthly_Salary / 160.0, 2) AS Hourly_Rate_PKR FROM Employee WHERE Monthly_Salary > 70000.00;
+-- Query #14 [Operator: / (Arithmetic in WHERE)]
+-- Purpose: Calculate the estimated hourly wage (Monthly_Salary / 160 hours) for staff earning an hourly rate of at least 450 PKR.
+SELECT Employee_ID, First_Name, Last_Name, Designation, Monthly_Salary, ROUND(Monthly_Salary / 160.0, 2) AS Hourly_Rate_PKR FROM Employee WHERE (Monthly_Salary / 160.0) >= 450.00;
 GO
 
 -- Query #15 [Operator: DISTINCT]
@@ -1462,8 +1462,8 @@ SELECT Booking_Channel, COUNT(Booking_ID) AS Total_Bookings, SUM(Net_Payable) AS
 GO
 
 -- Query #27 [Operator: HAVING with COUNT]
--- Purpose: Identify cinema screens that have at least 1 showtime scheduled and capacity over 150.
-SELECT Screen_ID, Total_Capacity, Sound_System FROM Screen WHERE Total_Capacity > 150 AND Is_Active = 1;
+-- Purpose: Identify cinema screen halls that host at least 1 active scheduled showtime.
+SELECT Screen_ID, COUNT(Show_ID) AS Total_Scheduled_Shows FROM Showtime GROUP BY Screen_ID HAVING COUNT(Show_ID) >= 1;
 GO
 
 -- Query #28 [Operator: BETWEEN with AND]
